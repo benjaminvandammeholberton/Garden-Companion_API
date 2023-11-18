@@ -70,4 +70,4 @@ class VegetableInfo(Document):
         Attributes:
         - name (str): The name of the collection in the database.
         """
-        name = "vegetable_info"
+        name = "vegetables_info"
