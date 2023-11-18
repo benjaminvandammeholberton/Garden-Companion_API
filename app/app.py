@@ -6,10 +6,11 @@ from fastapi import FastAPI
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from app.api.api_v1.router import router
 from app.core.config import settings
 from app.models.user_model import User
 from app.models.todo_model import Todo
-from app.api.api_v1.router import router
+from app.models.vegetable_info_model import VegetableInfo
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -32,7 +33,8 @@ async def app_init():
         database=db_client,
         document_models=[
             User,
-            Todo
+            Todo,
+            VegetableInfo
         ]
     )
     app.include_router(router, prefix=settings.API_V1_STR)

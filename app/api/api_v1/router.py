@@ -13,6 +13,7 @@ from fastapi import APIRouter
 
 from app.api.api_v1.handlers import todo
 from app.api.api_v1.handlers import user
+from app.api.api_v1.handlers import vegetable_info
 from app.api.auth.jwt import auth_router
 
 # Main APIRouter instance
@@ -20,5 +21,7 @@ router = APIRouter()
 
 # Include user-related, todo-related, and authentication routers
 router.include_router(user.user_router, prefix='/users', tags=["users"])
+router.include_router(vegetable_info.vegetable_info_router,
+                      prefix='/vegetable_info', tags=["vegetable_info"])
 router.include_router(todo.todo_router, prefix='/todo', tags=["todo"])
 router.include_router(auth_router, prefix='/auth', tags=["auth"])
