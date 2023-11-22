@@ -42,6 +42,7 @@ class AreaOut(BaseModel):
     - surface (int): The surface of the area.
     """
     area_id: UUID
+    name: str
     surface: float
     created_at: datetime
     updated_at: datetime

@@ -1,12 +1,17 @@
 """
 UserService module for handling user-related operations.
 """
+import json
 from typing import Optional
 from uuid import UUID
+from pathlib import Path
 
 from app.core.security import get_password, verify_password
 from app.models.user_model import User
+from app.models.vegetable_info_model import VegetableInfo
 from app.schemas.user_schema import UserAuth
+from app.schemas.vegetable_info_schema import VegetableInfoCreate
+from app.services.vegetable_info_service import VegetableInfoService
 
 
 class UserService:
@@ -24,6 +29,16 @@ class UserService:
             hashed_password=get_password(user.password)
         )
         await user_in.save()
+
+        # Load initial vegetable information from JSON file
+        initial_vegetable_info_file = Path("./vegetable_info_data.json")
+        with open(initial_vegetable_info_file, "r") as file:
+            initial_vegetable_info = json.load(file)
+        print(initial_vegetable_info)
+        # Link the vegetable information to the user
+        for veg_info_data in initial_vegetable_info:
+            await VegetableInfoService.create_vegetable(user_in, VegetableInfoCreate(**veg_info_data))
+
         return user_in
 
     @staticmethod

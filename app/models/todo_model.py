@@ -37,7 +37,6 @@ class Todo(Document):
     todo_id: UUID = Field(default_factory=uuid4, unique=True)
     status: bool = False
     title: Indexed(str)
-    description: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     owner: Link[User]

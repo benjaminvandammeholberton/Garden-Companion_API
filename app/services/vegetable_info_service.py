@@ -21,7 +21,6 @@ class VegetableInfoService:
         """
         vegetables = await VegetableInfo.find(VegetableInfo.owner.id
                                               == user.id).to_list()
-        print(vegetables)
         return vegetables
 
     @staticmethod

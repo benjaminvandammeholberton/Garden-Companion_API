@@ -21,7 +21,6 @@ class AreaService:
         """
         areas = await Area.find(Area.owner.id
                                               == user.id).to_list()
-        print(areas)
         return areas
 
     @staticmethod

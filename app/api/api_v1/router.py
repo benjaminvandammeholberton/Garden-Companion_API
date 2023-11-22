@@ -11,7 +11,7 @@ Usage:
 
 from fastapi import APIRouter
 
-from app.api.api_v1.handlers import area, todo, user, vegetable_info
+from app.api.api_v1.handlers import area, todo, user, vegetable_info, vegetable_manager
 from app.api.auth.jwt import auth_router
 
 # Main APIRouter instance
@@ -24,4 +24,6 @@ router.include_router(todo.todo_router, prefix='/todo', tags=["todo"])
 router.include_router(user.user_router, prefix='/users', tags=["users"])
 router.include_router(vegetable_info.vegetable_info_router,
                       prefix='/vegetable_info', tags=["vegetable_info"])
+router.include_router(vegetable_manager.vegetable_manager_router,
+                      prefix='/vegetable_manager', tags=["vegetable_manager"])
 router.include_router(auth_router, prefix='/auth', tags=["auth"])

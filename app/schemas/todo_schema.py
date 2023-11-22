@@ -18,7 +18,6 @@ class TodoCreate(BaseModel):
     - status (Optional[bool]): The status of the todo (default is False).
     """
     title: str = Field(..., title='Title', max_length=55, min_length=1)
-    description: str = Field(..., title='Title', max_length=755, min_length=1)
     status: Optional[bool] = False
 
 
@@ -31,10 +30,8 @@ class TodoUpdate(BaseModel):
     - description (Optional[str]): The updated description of the todo.
     - status (Optional[bool]): The updated status of the todo.
     """
-    title: Optional[str] = Field(..., title='Title',
+    title: Optional[str] = Field(None, title='Title',
                                  max_length=55, min_length=1)
-    description: Optional[str] = Field(..., title='Title',
-                                       max_length=755, min_length=1)
     status: Optional[bool] = False
 
 
@@ -53,6 +50,5 @@ class TodoOut(BaseModel):
     todo_id: UUID
     status: bool
     title: str
-    description: str
     created_at: datetime
     updated_at: datetime
