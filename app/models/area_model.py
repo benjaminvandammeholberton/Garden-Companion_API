@@ -18,7 +18,8 @@ class Area(Document):
     name: Indexed(str)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-    surface: float 
+    surface: float
+    sowing_area: bool
     owner: Link[User]
 
     def __repr__(self) -> str:
