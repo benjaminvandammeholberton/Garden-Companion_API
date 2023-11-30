@@ -2,11 +2,10 @@
 Vegetable Manager model representing a document in a database.
 """
 
-from beanie import BackLink, Document, Indexed, Link, before_event, Replace, Insert
+from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from datetime import datetime, date
 from pydantic import Field
 from typing import Optional
-from bson import ObjectId
 from uuid import UUID, uuid4
 from app.models.area_model import Area
 
@@ -27,12 +26,12 @@ class VegetableManager(Document):
     quantity: int
     sowed: bool = Field(default_factory=False)
     planted: bool = Field(default_factory=False)
-    sowing_date: Optional[datetime]
-    planting_date: Optional[datetime]
-    harvest_date: Optional[datetime]
+    sowing_date: Optional[date]
+    planting_date: Optional[date]
+    harvest_date: Optional[date]
     harvest_quantity: Optional[float]
     harvest_unit: Optional[str]
-    remove_date: Optional[datetime]
+    remove_date: Optional[date]
     notes: Optional[str]
     area: Link[Area]
     owner: Link[User]
@@ -69,6 +68,7 @@ class VegetableManager(Document):
         Update the `updated_at` timestamp before Replace or Insert events.
         """
         self.updated_at = datetime.utcnow()
+
     
     class Settings:
         """
@@ -78,3 +78,10 @@ class VegetableManager(Document):
         - name (str): The name of the collection in the database.
         """
         name = "vegetables_manager"
+        bson_encoders = {
+            date: lambda x: (
+                datetime.combine(x, datetime.min.time())
+                if isinstance(x, date)
+                else x
+            ),
+        }
