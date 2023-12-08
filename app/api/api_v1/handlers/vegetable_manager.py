@@ -40,7 +40,7 @@ async def create_vegetable_manager(data: VegetableManagerCreate,
 
 
 @vegetable_manager_router.get('/{vegetable_manager_id}', summary='Get a vegetable_manager by vegetable_manager_id',
-                 response_model=VegetableManagerOut)
+                 response_model=VegetableManager)
 async def retrieve(vegetable_manager_id: UUID,
                    current_user: User = Depends(get_current_user)):
     """
