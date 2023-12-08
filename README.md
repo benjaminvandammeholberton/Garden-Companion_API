@@ -1,3 +1,5 @@
+uvicorn app.app:app --host 0.0.0.0 --reload  
+
 # FODOIST
 
 `Fodoist` is a full stack todo application built with FARM stack. FastAPI and MongoDB on the backend and ReactJS on the frontend.
