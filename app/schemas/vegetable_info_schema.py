@@ -30,7 +30,7 @@ class VegetableInfoCreate(BaseModel):
     name: str = Field(..., title='Name', max_length=25, min_length=1)
     family: str = Field(..., title='Family', max_length=55, min_length=1)
     # category: str = Field(..., title='Category', max_length=25, min_length=1)
-    start_indoor: date = Field(..., title='Date to start indoor sowing')
+    start_indoor: date = Field(None, title='Date to start indoor sowing')
     start_outdoor: date = Field(..., title='Date to start outdoor sowing')
     end: date = Field(..., title='Last date for sowing')
     water_needs: conint(ge=0, le=5) = Field(..., title='Water Needs (scale: 0 to 5)')

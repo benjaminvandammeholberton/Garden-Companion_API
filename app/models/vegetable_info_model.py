@@ -20,7 +20,7 @@ class VegetableInfo(Document):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     family: Indexed(str)
     # category: Indexed(str)
-    start_indoor: datetime
+    start_indoor: Optional[datetime]
     start_outdoor: datetime
     end: datetime
     water_needs: int
