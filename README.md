@@ -1,4 +1,5 @@
 uvicorn app.app:app --host 0.0.0.0 --reload  
+export OPENAI_API_KEY='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'  
 
 # FODOIST
 
