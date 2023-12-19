@@ -11,7 +11,7 @@ Usage:
 
 from fastapi import APIRouter
 
-from app.api.api_v1.handlers import area, todo, user, vegetable_info, vegetable_manager, chat_bot
+from app.api.api_v1.handlers import area, todo, user, vegetable_info, vegetable_manager, chat_bot, forecast
 from app.api.auth.jwt import auth_router
 
 # Main APIRouter instance
@@ -29,3 +29,4 @@ router.include_router(vegetable_manager.vegetable_manager_router,
 router.include_router(chat_bot.chat_bot_router,
                       prefix='/assistant', tags=["assistant"])
 router.include_router(auth_router, prefix='/auth', tags=["auth"])
+router.include_router(forecast.forecast_router, prefix='/forecast', tags=['forecast'])
