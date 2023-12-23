@@ -28,6 +28,8 @@ class Settings(BaseSettings):
         refresh tokens (in minutes).
     - BACKEND_CORS_ORIGINS (List[AnyHttpUrl]): List of allowed CORS origins.
     - PROJECT_NAME (str): The name of the project.
+    - MAX_CHAT_BOT_REQUEST (int): The number of request a user is allowed\
+        to do per day.
     - MONGO_CONNECTION_STRING (str): MongoDB connection string.
 
     Config:
@@ -41,6 +43,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRATION_MINUTES: int = 60 * 24 * 7
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
     PROJECT_NAME: str = "Garden-Companion"
+    MAX_CHAT_BOT_REQUEST: int = 3 
 
     MONGO_CONNECTION_STRING: str = config("MONGO_CONNECTION_STRING", cast=str)
 

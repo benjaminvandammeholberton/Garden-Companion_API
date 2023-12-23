@@ -2,6 +2,7 @@
 User-related Pydantic models for authentication and output.
 """
 
+from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 from uuid import UUID
@@ -42,3 +43,17 @@ class UserOut(BaseModel):
     first_name: Optional[str]
     last_name: Optional[str]
     disabled:  Optional[bool] = False
+    chat_bot_day_requests: int
+    chat_bot_total_requests: int
+    last_request_datetime: Optional[datetime]
+
+
+class UserUpdate(BaseModel):
+    """
+
+    """
+    first_name: Optional[str] = Field(None, title='First Name',
+                                 max_length=25, min_length=6)
+    last_name: Optional[str] = Field(None, title='Last Name',
+                                 max_length=25, min_length=6)
+    

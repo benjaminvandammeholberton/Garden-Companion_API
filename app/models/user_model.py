@@ -2,7 +2,7 @@
 User model representing a document in a database.
 """
 
-from beanie import Document, Indexed
+from beanie import Document, Indexed, Insert, Replace, before_event
 from datetime import datetime
 from pydantic import Field, EmailStr
 from typing import Optional
@@ -22,6 +22,7 @@ class User(Document):
     - last_name (Optional[str]): The last name of the user (default is None).
     - disabled (Optional[bool]): Indicates if the user is\
         disabled (default is None).
+    - chat_bot_requests (int): The number of chat bot requests (default is 0).
 
     Properties:
     - create (datetime): The creation timestamp of the user.
@@ -46,6 +47,10 @@ class User(Document):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     disabled: Optional[bool] = None
+    chat_bot_day_requests: int = 0
+    chat_bot_total_requests: int = 0
+    last_request_datetime: Optional[datetime] = None
+    
 
     def __repr__(self) -> str:
         """
@@ -89,6 +94,13 @@ class User(Document):
         :return: User with the specified email.
         """
         return await self.find_one(self.email == email)
+    
+    @before_event([Replace, Insert])
+    def update_update_at(self):
+        """
+        Update the `updated_at` timestamp before Replace or Insert events.
+        """
+        self.updated_at = datetime.utcnow()
 
     class Settings:
         """

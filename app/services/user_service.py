@@ -79,3 +79,11 @@ class UserService:
         """
         user = await User.find_one(User.user_id == id)
         return user
+
+    @staticmethod
+    async def get_user_by_username(username: str) -> Optional[User]:
+        """
+
+        """
+        user = await User.find_one(User.username == username)
+        return user

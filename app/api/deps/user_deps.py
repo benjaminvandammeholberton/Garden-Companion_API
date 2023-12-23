@@ -2,7 +2,7 @@
 Authentication utilities and dependencies for FastAPI.
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import ValidationError
@@ -58,3 +58,20 @@ async def get_current_user(token: str = Depends(reuseable_oauth)) -> User:
             detail="Could not find user"
         )
     return user
+
+async def check_daily_limit(current_user: User = Depends(get_current_user)):
+    """
+    Dependency to check if the user has exceeded the daily limit.
+    """
+    max_requests = settings.MAX_CHAT_BOT_REQUEST
+    today = datetime.now().date()
+
+    # if current_user.last_request_datetime.date() != today:
+    #     current_user.chat_bot_day_requests = 0
+    #     await current_user.save()
+        
+    if current_user.chat_bot_day_requests >= max_requests:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Daily chat bot request limit exceeded"
+        )
