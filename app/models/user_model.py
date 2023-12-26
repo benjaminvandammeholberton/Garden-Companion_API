@@ -49,7 +49,7 @@ class User(Document):
     disabled: Optional[bool] = None
     chat_bot_day_requests: int = 0
     chat_bot_total_requests: int = 0
-    last_request_datetime: Optional[datetime] = None
+    last_request_datetime: Optional[datetime] = datetime.utcnow()
     
 
     def __repr__(self) -> str:

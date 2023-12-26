@@ -6,7 +6,7 @@ from typing import Optional
 from uuid import UUID
 from pathlib import Path
 
-from app.core.security import get_password, verify_password
+from app.core.security import create_access_token, get_password, verify_password
 from app.models.user_model import User
 from app.models.vegetable_info_model import VegetableInfo
 from app.schemas.user_schema import UserAuth
@@ -87,3 +87,17 @@ class UserService:
         """
         user = await User.find_one(User.username == username)
         return user
+    
+    @staticmethod
+    async def update_user_password(data: dict, current_user: User):
+        """
+        
+        """
+        hashed_password = get_password(data['new_password'])
+        print(hashed_password)
+        current_user.hashed_password = hashed_password
+        current_user.update_update_at()
+        await current_user.save()
+        new_access_token = create_access_token(current_user.user_id)
+        return {"new_access_token": new_access_token}
+        
