@@ -55,7 +55,9 @@ class ChatBotService:
         The system message provides information about the ChatBot's expertise in vegetable gardens.
         The user's input is included in the conversation for context.
         """
-        system_message = {"role": "system", "content": "You are a french assistant about vegetable gardens. If the user asks a question unrelated to gardening, letting them know that your expertise is in vegetable gardens."}
+        system_message = {"role": "system", "content": "You are a french assistant about vegetable\
+                          gardens. If the user asks a question unrelated to gardening, letting them\
+                          know that your expertise is in vegetable gardens."}
         completion = await client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
