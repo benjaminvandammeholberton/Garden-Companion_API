@@ -96,7 +96,7 @@ class UserService:
         hashed_password = get_password(data['new_password'])
         print(hashed_password)
         current_user.hashed_password = hashed_password
-        current_user.update_update_at()
+        current_user.update_updated_at()
         await current_user.save()
         new_access_token = create_access_token(current_user.user_id)
         return {"new_access_token": new_access_token}

@@ -41,6 +41,8 @@ class User(Document):
     - name (str): The name of the collection in the database.
     """
     user_id: UUID = Field(default_factory=uuid4)
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
     username: Indexed(str, unique=True)
     email: Indexed(EmailStr, unique=True)
     hashed_password: str
@@ -49,7 +51,7 @@ class User(Document):
     disabled: Optional[bool] = None
     chat_bot_day_requests: int = 0
     chat_bot_total_requests: int = 0
-    last_request_datetime: Optional[datetime] = datetime.utcnow()
+    last_request_datetime: datetime = Field(default_factory=datetime.now)
     
 
     def __repr__(self) -> str:
@@ -96,7 +98,7 @@ class User(Document):
         return await self.find_one(self.email == email)
     
     @before_event([Replace, Insert])
-    def update_update_at(self):
+    def update_updated_at(self):
         """
         Update the `updated_at` timestamp before Replace or Insert events.
         """
