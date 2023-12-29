@@ -108,3 +108,12 @@ class VegetableManagerService:
         if vegetable:
             await vegetable.delete()
         return None
+    
+    @staticmethod
+    async def delete_all_vegetables_in_area(current_user: User, area_id: UUID):
+        """
+        """
+        vegetables = await VegetableManagerService.list_vegetables(current_user)
+        for vegetable in vegetables:
+            if vegetable.area.area_id == area_id:
+                await VegetableManagerService.delete_vegetable(current_user, vegetable.vegetable_manager_id)

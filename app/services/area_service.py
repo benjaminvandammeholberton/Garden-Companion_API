@@ -73,7 +73,9 @@ class AreaService:
         :param area_id: ID of the area to delete.
         :return: None
         """
+        from app.services.vegetable_manager_service import VegetableManagerService
         area = await AreaService.retrieve_area(current_user, area_id)
         if area:
+            await VegetableManagerService.delete_all_vegetables_in_area(current_user, area_id)
             await area.delete()
         return None
