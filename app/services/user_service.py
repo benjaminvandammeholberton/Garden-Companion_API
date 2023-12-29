@@ -100,4 +100,10 @@ class UserService:
         await current_user.save()
         new_access_token = create_access_token(current_user.user_id)
         return {"new_access_token": new_access_token}
+    
+    @staticmethod
+    async def delete_user(current_user: User):
+        """
         
+        """
+        await current_user.delete()

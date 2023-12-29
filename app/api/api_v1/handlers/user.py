@@ -45,7 +45,6 @@ async def update_password(data: dict, current_user: User = Depends(get_current_u
     """
     
     """
-    print(data)
     return await UserService.update_user_password(data, current_user)
 
 @user_router.post('/verify_password', summary="Verify the user password")
@@ -77,3 +76,10 @@ async def get_user_by_username(username: str):
     if user:
         return {username: 'already exists'}
     return {username: 'doesn\'t exists'}
+
+@user_router.delete('/delete_account', summary='Delete the current user')
+async def delete_user(current_user: User = Depends(get_current_user)):
+    """
+    
+    """
+    await UserService.delete_user(current_user)
