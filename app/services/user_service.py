@@ -11,7 +11,10 @@ from app.models.user_model import User
 from app.models.vegetable_info_model import VegetableInfo
 from app.schemas.user_schema import UserAuth
 from app.schemas.vegetable_info_schema import VegetableInfoCreate
+from app.services.area_service import AreaService
+from app.services.todo_service import TodoService
 from app.services.vegetable_info_service import VegetableInfoService
+from app.services.vegetable_manager_service import VegetableManagerService
 
 
 class UserService:
@@ -106,4 +109,16 @@ class UserService:
         """
         
         """
+        todos = await TodoService.list_todos(current_user)
+        for todo in todos:
+            await todo.delete()
+        vegetables_infos = await VegetableInfoService.list_vegetables(current_user)
+        for vegetable in vegetables_infos:
+            await vegetable.delete()
+        vegetables_manager = await VegetableManagerService.list_vegetables(current_user)
+        for vegetable in vegetables_manager:
+            await vegetable.delete()
+        areas = await AreaService.list_areas(current_user)
+        for area in areas:
+            await area.delete()
         await current_user.delete()
