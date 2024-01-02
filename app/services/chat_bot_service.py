@@ -91,6 +91,6 @@ class ChatBotService:
             current_user.last_request_datetime = datetime.now()
             current_user.chat_bot_day_requests = 0
             await current_user.save()
-            return current_user.chat_bot_day_requests
+            return {"chat_bot_day_requests": current_user.chat_bot_day_requests}
         else:
-            return current_user.chat_bot_day_requests
+            return {"chat_bot_day_requests": current_user.chat_bot_day_requests}
