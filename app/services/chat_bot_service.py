@@ -83,3 +83,14 @@ class ChatBotService:
         await current_user.update({"$inc": {"chat_bot_day_requests": 1, "chat_bot_total_requests": 1},
             "$set": {"last_request_datetime": datetime.now()}})
         await current_user.save()
+    
+    @staticmethod
+    async def get_number_of_requests_allowed(current_user: User):
+        today = datetime.now().date()
+        if current_user.last_request_datetime.date() != today:
+            current_user.last_request_datetime = datetime.now()
+            current_user.chat_bot_day_requests = 0
+            await current_user.save()
+            return current_user.chat_bot_day_requests
+        else:
+            return current_user.chat_bot_day_requests

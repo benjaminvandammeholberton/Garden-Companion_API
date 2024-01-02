@@ -17,3 +17,12 @@ async def chat_bot_response(data: dict, current_user: User = Depends(get_current
     """
     await ChatBotService.increase_request(current_user)
     return await ChatBotService.send_answer(data)
+
+@chat_bot_router.get('/', summary='Get Number of requests allowed left')
+async def number_of_requests_allowed(current_user: User = Depends(get_current_user)):
+    """
+    
+    """
+    return await ChatBotService.get_number_of_requests_allowed(current_user)
+
+                                     
