@@ -108,7 +108,7 @@
         "description": "La culture des radis est simple. Ils préfèrent un sol léger et bien drainé. Les graines sont semées directement en pleine terre, et les radis poussent rapidement. Une exposition ensoleillée favorise leur croissance."
     },
     {
-        "name": "Chou Cabus",
+        "name": "Chou cabus",
         "category": "Choux",
         "start_indoor": "2023-02-01",
         "start_outdoor": "2023-04-01",
