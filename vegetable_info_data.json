@@ -201,6 +201,90 @@
         "cold_resistance": 2,
         "spacing_on_row": 30,
         "germination": 7,
-        "description": "Le chou kale préfère une exposition ensoleillée à mi-ombre. Une protection contre les ravageurs contribue à une croissance saine. La récolte peut commencer lorsque les feuilles sont suffisamment développées, en évitant de couper trop près du cœur pour une repousse continue."
+        "description": "Le chou kale préfère une exposition ensoleillée à mi-ombre. Une protection contre les ravageurs contribue à une croissance saine. La récolte peut commencer lorsque les feuilles sont suffisamment développées."
+    },
+    {
+        "name": "Ail",
+        "category": "Alliacées",
+        "start_indoor": null,
+        "start_outdoor": "2023-01-15",
+        "end": "2023-03-31",
+        "water_needs": 1,
+        "cold_resistance": 2,
+        "spacing_on_row": 10,
+        "germination": 21,
+        "description": "L'ail est une culture aisée après une longue saison de croissance. Sa grande tolérance au gel le rend idéal pour la plantation dans des climats plus frais. Un sol bien fertilisé est essentiel. La récolte de l'ail s'effectue lorsque le feuillage est sec."
+    },
+    {
+        "name": "Roquette",
+        "category": "Verdures",
+        "start_indoor": "2023-01-15",
+        "start_outdoor": "2023-03-15",
+        "end": "2023-08-31",
+        "water_needs": 2,
+        "cold_resistance": 1,
+        "spacing_on_row": 5,
+        "germination": 7,
+        "description": "La roquette est une culture de saison fraîche à croissance rapide. Elle est couramment utilisée comme composant de mélanges de salades mesclun. Elle est quelque peu tolérante au gel, et ses graines peuvent même germer dans un sol frais !"
+    },
+    {
+        "name": "Chou chinois",
+        "category": "Choux",
+        "start_indoor": "2023-03-15",
+        "start_outdoor": "2023-04-15",
+        "end": "2023-08-15",
+        "water_needs": 2,
+        "cold_resistance": 2,
+        "spacing_on_row": 30,
+        "germination": 6,
+        "description": "Le chou chinois prospère dans un sol bien drainé et riche en matière organique. Il préfère les températures fraîches et la récolte peut se faire lorsque les feuilles sont suffisamment développées, généralement avant que la plante ne fleurisse."
+    },
+    {
+        "name": "Chou-fleur",
+        "category": "Choux",
+        "start_indoor": "2023-03-15",
+        "start_outdoor": "2023-04-01",
+        "end": "2023-07-15",
+        "water_needs": 2,
+        "cold_resistance": 1,
+        "spacing_on_row": 70,
+        "germination": 6,
+        "description": "La culture du chou-fleur implique un sol bien drainé et fertilisé. Il faut protéger les têtes de chou-fleur du soleil en les liant pour les maintenir blanches. La récolte se fait lorsque les têtes sont fermes et denses."
+    },
+    {
+        "name": "Poireau",
+        "category": "Alliacées",
+        "start_indoor": "2023-02-01",
+        "start_outdoor": "2023-04-01",
+        "end": "2023-04-30",
+        "water_needs": 2,
+        "cold_resistance": 2,
+        "spacing_on_row": 15,
+        "germination": 12,
+        "description": "La culture du poireau nécessite un sol bien drainé et ensoleillé. Ils peuvent être semées directement ou les plants transplantés. L'arrosage régulier favorise une croissance saine. La récolte se fait lorsque les poireaux ont atteint une taille appropriée."
+    },
+    {
+        "name": "Rutabaga",
+        "category": "Racines",
+        "start_indoor": "2023-02-15",
+        "start_outdoor": "2023-03-15",
+        "end": "2023-07-31",
+        "water_needs": 2,
+        "cold_resistance": 2,
+        "spacing_on_row": 30,
+        "germination": 8,
+        "description": "La culture du rutabaga nécessite un sol bien drainé et profond. Ils sont assez résistants aux conditions météorologiques difficiles. La récolte se fait lorsque les racines atteignent une taille convenable."
+    },
+    {
+        "name": "Navet",
+        "category": "Racines",
+        "start_indoor": "2023-02-01",
+        "start_outdoor": "2023-04-01",
+        "end": "2023-08-15",
+        "water_needs": 2,
+        "cold_resistance": 2,
+        "spacing_on_row": 25,
+        "germination": 8,
+        "description": "Le navet peut tolérer des conditions météorologiques variées. L'arrosage régulier favorise une croissance optimale. La récolte se fait lorsque les racines ont atteint une taille appropriée, généralement avant qu'elles ne deviennent trop fibreuses."
     }
 ]
