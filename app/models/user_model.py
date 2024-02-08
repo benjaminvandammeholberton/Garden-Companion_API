@@ -52,6 +52,9 @@ class User(Document):
     chat_bot_day_requests: int = 0
     chat_bot_total_requests: int = 0
     last_request_datetime: datetime = Field(default_factory=datetime.now)
+    is_verified: bool = Field(default=False)
+    forget_password: Optional[str] = None
+    expiration_forget_password: Optional[datetime] = None
     
 
     def __repr__(self) -> str:

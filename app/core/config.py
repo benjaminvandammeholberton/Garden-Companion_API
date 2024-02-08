@@ -42,10 +42,13 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 120
     REFRESH_TOKEN_EXPIRATION_MINUTES: int = 60 * 24 * 7
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
-    PROJECT_NAME: str = "Garden-Companion"
+    PROJECT_NAME: str = "Garden Companion"
     MAX_CHAT_BOT_REQUEST: int = 3 
-
     MONGO_CONNECTION_STRING: str = config("MONGO_CONNECTION_STRING", cast=str)
+    MAIL_USERNAME: str = config("MAIL_USERNAME", cast=str)
+    MAIL_PASSWORD: str = config("MAIL_PASSWORD", cast=str)
+    MAIL_FROM: str = config("MAIL_FROM", cast=str)
+    MAIL_SERVER: str = config("MAIL_SERVER", cast=str)
 
     class Config:
         """
