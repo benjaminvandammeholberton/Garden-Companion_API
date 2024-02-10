@@ -3,11 +3,13 @@ Utility functions for password hashing, token creation, and verification.
 """
 
 from datetime import datetime, timedelta
+from itsdangerous import URLSafeTimedSerializer, BadTimeSignature, SignatureExpired
 from jose import jwt
 from passlib.context import CryptContext
 from typing import Union, Any
 
 from app.core.config import settings
+from app.schemas.user_schema import EmailSchema
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -72,3 +74,25 @@ def verify_password(password: str, hashed_pass: str) -> bool:
     :return: True if the passwords match, False otherwise.
     """
     return password_context.verify(password, hashed_pass)
+
+
+secret_key = settings.JWT_SECRET_KEY
+token_algo = URLSafeTimedSerializer(secret_key, salt='Email_Verification')
+
+def create_token(email: EmailSchema):
+    """
+    """
+    _token = token_algo.dumps(email)
+    return _token
+
+
+def verify_token(token: str):
+    """
+    """
+    try:
+        email = token_algo.loads(token)
+    except SignatureExpired:
+        return None
+    except BadTimeSignature:
+        return None
+    return {'email': email, 'check': True}

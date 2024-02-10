@@ -15,7 +15,7 @@ from app.services.area_service import AreaService
 from app.services.todo_service import TodoService
 from app.services.vegetable_info_service import VegetableInfoService
 from app.services.vegetable_manager_service import VegetableManagerService
-
+from app.api.auth.email_verification import send_verification_email
 
 class UserService:
     @staticmethod
@@ -37,11 +37,10 @@ class UserService:
         initial_vegetable_info_file = Path("./vegetable_info_data.json")
         with open(initial_vegetable_info_file, "r") as file:
             initial_vegetable_info = json.load(file)
-        print(initial_vegetable_info)
         # Link the vegetable information to the user
         for veg_info_data in initial_vegetable_info:
             await VegetableInfoService.create_vegetable(user_in, VegetableInfoCreate(**veg_info_data))
-
+        await send_verification_email(user.email, user)
         return user_in
 
     @staticmethod

@@ -18,7 +18,6 @@ reuseable_oauth = OAuth2PasswordBearer(
     scheme_name="JWT"
 )
 
-
 async def get_current_user(token: str = Depends(reuseable_oauth)) -> User:
     """
     Dependency function to get the current user from the JWT token.
@@ -70,3 +69,4 @@ async def check_daily_limit(current_user: User = Depends(get_current_user)):
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Daily chat bot request limit exceeded"
         )
+1
