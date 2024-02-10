@@ -34,12 +34,12 @@ async def send_verification_email(
 
     Args:
         email (EmailSchema): The email address to send the verification
-                                                                email to.
+            email to.
         user (User): The user object associated with the email address.
 
     Returns:
         JSONResponse: A JSON response indicating the status of the email
-                                                            sending process.
+            sending process.
     """
     username = user.username
     _token = create_token(email)
@@ -49,8 +49,9 @@ async def send_verification_email(
             <p>Afin de confirmer votre adresse email et valider votre
                 inscription, merci de cliquer sur ce bouton :</p>
             <a
-            href="http://127.0.0.1:8000/api/v1/email/confirm-email/{_token}">
-                <button>Valider mon inscription</button></a>
+            href="{ settings.BACK_END_URL }{ settings.API_V1_STR }/email/
+confirm-email/{_token}"><button>Valider mon inscription
+                </button></a>
             <p>À tout de suite 🥕</p>
             <p>Benjamin, créateur de Garden Companion</p>
             """
@@ -77,12 +78,12 @@ async def confirm_email(token: str):
 
     Returns:
         RedirectResponse: A redirection response to the appropriate URL based
-                                                on the verification status.
+            on the verification status.
     """
     verification = verify_token(token)
     await update_verified_user(verification['email'])
     if verification['check']:
-        return RedirectResponse(url='https://gardencompanion.io/login.html',
+        return RedirectResponse(url=f'{ settings.FRONT_END_URL }/login.html',
                                 status_code=302)
     if verification is None:
         raise HTTPException(

@@ -1,4 +1,22 @@
-""" Module for password reset functionality.
+"""
+Module for password reset functionality.
+
+This module contains two API endpoints for handling password reset
+functionality. The endpoints are:
+
+1. `send_reset_password_email`: This endpoint sends a password reset email to
+the provided email address. It takes an `EmailSchema` object as input, which
+contains the email address to send the password reset email to. It returns a 
+JSON response indicating the status of the email sending process.
+
+2. `update_password`: This endpoint updates the password of the user associated
+with the provided token. It takes a `UserResetPassword` object as input, which
+contains the token and the new password for resetting the password. It returns
+a JSON response indicating the status of the password update process.
+
+Both endpoints use the `FastAPI` framework for handling HTTP requests and
+responses. They also use the `FastMail` library for sending emails, and the
+`User` model for interacting with the database.
 """
 from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException, APIRouter, status
@@ -34,11 +52,11 @@ async def send_reset_password_email(data: EmailSchema) -> JSONResponse:
 
     Args:
         data (EmailSchema): The email address to send the password reset
-                                                                    email to.
+            email to.
 
     Returns:
         JSONResponse: A JSON response indicating the status of the email
-                                                            sending process.
+            sending process.
     """
     user = await User.find_one(User.email == data.email)
     if not user:
@@ -57,7 +75,8 @@ async def send_reset_password_email(data: EmailSchema) -> JSONResponse:
             <ol>
             <li>Cliquez sur le boutton suivant pour accéder à la page de
                 réinitialisation de mot de passe :<br><a
-                href="http://127.0.0.1:5501/reset_password.html?token={_token}">
+                href="{ settings.FRONT_END_URL }/reset_password.html
+?token={_token}">
                 <button>réinitialiser mon mot de passe
                 </button></a></li>
             <li>Vous serez redirigé(e) vers une page où vous pourrez entrer
@@ -92,14 +111,12 @@ async def update_password(data: UserResetPassword) -> JSONResponse:
 
     Args:
         data (UserResetPassword): The token and new password for resetting
-                                                                the password.
+            the password.
 
     Returns:
         JSONResponse: A JSON response indicating the status of the password
-                                                                update process.
+            update process.
     """
-    print(data.token)
-    print(data.password)
     user = await User.find_one(User.forget_password == data.token)
     if not user:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,

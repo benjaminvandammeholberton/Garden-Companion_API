@@ -1,7 +1,6 @@
 """
-FastAPI application with MongoDB integration.
+This is the entry point for the Garden Companion backend application.
 """
-
 from fastapi import FastAPI
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -20,25 +19,31 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-# CORS (Cross-Origin Resource Sharing) Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Add your frontend URL here
+    allow_origins=[settings.FRONT_END_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-
 @app.on_event("startup")
 async def app_init():
     """
-    Initialize crucial application services.
+    Initialize the application on startup.
 
-    Connects to MongoDB and initializes Beanie with User and Todo models.
+    This function is executed when the application starts up. It connects to
+    the MongoDB database using the provided connection string and initializes
+    the Beanie ORM with the specified document models. It also includes the
+    router for the API endpoints.
+
+    Parameters:
+        None
+
+    Returns:
+        None
     """
-
     db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING)\
         .garden_companion
 
