@@ -1,5 +1,6 @@
 """
-VegetableInfoService module for handling CRUD operations on VegetableInfo objects.
+VegetableInfoService module for handling CRUD operations on VegetableInfo
+objects.
 """
 
 from typing import List
@@ -7,7 +8,8 @@ from uuid import UUID
 
 from app.models.vegetable_info_model import VegetableInfo
 from app.models.user_model import User
-from app.schemas.vegetable_info_schema import VegetableInfoCreate, VegetableInfoUpdate
+from app.schemas.vegetable_info_schema import (VegetableInfoCreate,
+                                               VegetableInfoUpdate)
 
 
 class VegetableInfoService:
@@ -24,7 +26,10 @@ class VegetableInfoService:
         return vegetables
 
     @staticmethod
-    async def create_vegetable(user: User, data: VegetableInfoCreate) -> VegetableInfo:
+    async def create_vegetable(
+        user: User,
+        data: VegetableInfoCreate
+    ) -> VegetableInfo:
         """
         Create a new vegetable for the given user.
 
@@ -44,12 +49,18 @@ class VegetableInfoService:
         :param vegetable_id: ID of the vegetable to retrieve.
         :return: Retrieved vegetable.
         """
-        vegetable = await VegetableInfo.find_one(VegetableInfo.vegetable_info_id == vegetable_info_id,
-                                   VegetableInfo.owner.id == current_user.id)
+        vegetable = await VegetableInfo.find_one(
+            VegetableInfo.vegetable_info_id == vegetable_info_id,
+            VegetableInfo.owner.id == current_user.id
+        )
         return vegetable
 
     @staticmethod
-    async def update_vegetable(current_user: User, vegetable_id: UUID, data: VegetableInfoUpdate):
+    async def update_vegetable(
+        current_user: User,
+        vegetable_id: UUID,
+        data: VegetableInfoUpdate
+    ):
         """
         Update a vegetable for the current user.
 
@@ -58,7 +69,10 @@ class VegetableInfoService:
         :param data: VegetableInfo update data.
         :return: Updated vegetable.
         """
-        vegetable = await VegetableInfoService.retrieve_vegetable(current_user, vegetable_id)
+        vegetable = await VegetableInfoService.retrieve_vegetable(
+            current_user,
+            vegetable_id
+        )
         await vegetable.update({"$set": data.dict(exclude_unset=True)})
         vegetable.update_updated_at()
         await vegetable.save()
@@ -73,7 +87,10 @@ class VegetableInfoService:
         :param vegetable_id: ID of the vegetable to delete.
         :return: None
         """
-        vegetable = await VegetableInfoService.retrieve_vegetable(current_user, vegetable_id)
+        vegetable = await VegetableInfoService.retrieve_vegetable(
+            current_user,
+            vegetable_id
+        )
         if vegetable:
             await vegetable.delete()
         return None
