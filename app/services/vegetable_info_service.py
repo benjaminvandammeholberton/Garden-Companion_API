@@ -2,9 +2,10 @@
 VegetableInfoService module for handling CRUD operations on VegetableInfo
 objects.
 """
-
+import json
 from typing import List
 from uuid import UUID
+from pathlib import Path
 
 from app.models.vegetable_info_model import VegetableInfo
 from app.models.user_model import User
@@ -94,3 +95,17 @@ class VegetableInfoService:
         if vegetable:
             await vegetable.delete()
         return None
+
+    @staticmethod
+    async def add_all_vegetable_info_to_user(
+        current_user: User
+    ):
+        # Load initial vegetable information from JSON file
+        initial_vegetable_info_file = Path("./vegetable_info_data.json")
+        with open(initial_vegetable_info_file, "r") as file:
+            initial_vegetable_info = json.load(file)
+        # Link the vegetable information to the user
+        for veg_info_data in initial_vegetable_info:
+            await VegetableInfoService.create_vegetable(
+                current_user, VegetableInfoCreate(**veg_info_data)
+            )
