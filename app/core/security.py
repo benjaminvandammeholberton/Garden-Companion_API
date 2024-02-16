@@ -3,7 +3,9 @@ Utility functions for password hashing, token creation, and verification.
 """
 
 from datetime import datetime, timedelta
-from itsdangerous import URLSafeTimedSerializer, BadTimeSignature, SignatureExpired
+from itsdangerous import (URLSafeTimedSerializer,
+                          BadTimeSignature,
+                          SignatureExpired)
 from jose import jwt
 from passlib.context import CryptContext
 from typing import Union, Any
@@ -78,6 +80,7 @@ def verify_password(password: str, hashed_pass: str) -> bool:
 
 secret_key = settings.JWT_SECRET_KEY
 token_algo = URLSafeTimedSerializer(secret_key, salt='Email_Verification')
+
 
 def create_token(email: EmailSchema):
     """
