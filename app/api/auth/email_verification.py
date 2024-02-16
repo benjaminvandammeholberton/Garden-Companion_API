@@ -1,17 +1,20 @@
 """ Module for email verification functionality.
 """
 from fastapi import HTTPException, APIRouter
-from fastapi_mail import FastMail, MessageSchema, \
-    ConnectionConfig, MessageType
-from fastapi.responses import RedirectResponse
-from starlette.responses import JSONResponse
+from fastapi_mail import (FastMail,
+                          MessageSchema,
+                          ConnectionConfig,
+                          MessageType)
+from fastapi.responses import RedirectResponse, JSONResponse
 
 from app.core.config import settings
-from app.core.security import create_token, verify_token
+from app.core.email_token_handler import EmailTokenHandler
 from app.models.user_model import User
 from app.schemas.user_schema import EmailSchema
 
 email_verification_router = APIRouter()
+
+handler = EmailTokenHandler()
 
 conf = ConnectionConfig(
     MAIL_USERNAME=settings.MAIL_USERNAME,
@@ -42,7 +45,7 @@ async def send_verification_email(
             sending process.
     """
     username = user.username
-    _token = create_token(email)
+    _token = handler.create_token(email)
     html = f"""
             <h1 style="font-size: 1.5rem">Bonjour {username} !</h1>
             <p>Bienvenue dans la communauté <b>Garden Companion</b> !</p>
@@ -80,7 +83,7 @@ async def confirm_email(token: str):
         RedirectResponse: A redirection response to the appropriate URL based
             on the verification status.
     """
-    verification = verify_token(token)
+    verification = handler.verify_token(token)
     await update_verified_user(verification['email'])
     if verification['check']:
         return RedirectResponse(url=f'{ settings.FRONT_END_URL }/login.html',
