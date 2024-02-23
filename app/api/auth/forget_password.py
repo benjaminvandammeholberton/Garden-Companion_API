@@ -6,7 +6,7 @@ functionality. The endpoints are:
 
 1. `send_reset_password_email`: This endpoint sends a password reset email to
 the provided email address. It takes an `EmailSchema` object as input, which
-contains the email address to send the password reset email to. It returns a 
+contains the email address to send the password reset email to. It returns a
 JSON response indicating the status of the email sending process.
 
 2. `update_password`: This endpoint updates the password of the user associated
