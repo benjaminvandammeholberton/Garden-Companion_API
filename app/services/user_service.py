@@ -10,7 +10,7 @@ from app.core.security import (create_access_token,
                                get_password,
                                verify_password)
 from app.models.user_model import User
-from app.schemas.user_schema import UserAuth
+from app.schemas.user_schema import UserAuth, UserUpdate
 from app.services.area_service import AreaService
 from app.services.todo_service import TodoService
 from app.services.vegetable_info_service import VegetableInfoService
@@ -113,3 +113,10 @@ class UserService:
         for area in areas:
             await area.delete()
         await current_user.delete()
+
+    @staticmethod
+    async def update_user(data: UserUpdate, user: User):
+        """
+        Update user
+        """
+        await user.update({"$set": data})
