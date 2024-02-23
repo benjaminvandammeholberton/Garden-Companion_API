@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 import pymongo
 
 from app.schemas.user_schema import UserAuth, UserOut
-from app.api.deps.user_deps import get_current_user
+from app.core.dependencies import get_current_user
 from app.core.security import verify_password, get_password, create_access_token
 from app.models.user_model import User
 from app.services.user_service import UserService

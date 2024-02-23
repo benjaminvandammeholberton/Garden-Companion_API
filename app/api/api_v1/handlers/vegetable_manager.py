@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 from uuid import UUID
 
-from app.api.deps.user_deps import get_current_user
+from app.core.dependencies import get_current_user
 from app.models.vegetable_manager_model import VegetableManager
 from app.models.user_model import User
 from app.schemas.vegetable_manager_schema import VegetableManagerOut, VegetableManagerCreate, VegetableManagerUpdate

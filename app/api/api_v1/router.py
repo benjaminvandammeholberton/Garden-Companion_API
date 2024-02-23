@@ -12,7 +12,7 @@ Usage:
 from fastapi import APIRouter
 
 from app.api.api_v1.handlers import area, todo, user, vegetable_info, vegetable_manager, chat_bot, forecast
-from app.api.auth.jwt import auth_router
+from app.api.auth.login import auth_router
 from app.api.auth.email_verification import email_verification_router
 from app.api.auth.forget_password import password_reset
 

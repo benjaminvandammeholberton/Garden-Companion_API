@@ -51,11 +51,10 @@ class User(Document):
     disabled: Optional[bool] = None
     chat_bot_day_requests: int = 0
     chat_bot_total_requests: int = 0
-    last_request_datetime: datetime = Field(default_factory=datetime.now)
+    last_request_datetime: Optional[datetime] = None
     is_verified: bool = Field(default=False)
     forget_password: Optional[str] = None
     expiration_forget_password: Optional[datetime] = None
-    
 
     def __repr__(self) -> str:
         """

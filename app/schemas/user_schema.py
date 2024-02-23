@@ -59,10 +59,12 @@ class UserUpdate(BaseModel):
 
 class UserResetPassword(BaseModel):
     """
-    
     """
     token: str = Field(..., min_length=15, max_length=35, title='token'),
     password: str = Field(..., min_length=5, max_length=50, title='user password')
-    
+
+
 class EmailSchema(BaseModel):
+    """
+    """
     email: EmailStr = Field(..., title="user's email Adress")

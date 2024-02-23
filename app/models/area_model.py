@@ -10,6 +10,7 @@ from uuid import UUID, uuid4
 
 from app.models.user_model import User
 
+
 class Area(Document):
     """
     
@@ -55,7 +56,6 @@ class Area(Document):
         """
         self.updated_at = datetime.utcnow()
 
-    
     class Settings:
         """
         Settings class for the Area model.

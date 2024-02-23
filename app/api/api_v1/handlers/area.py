@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from typing import List
 from uuid import UUID
 
-from app.api.deps.user_deps import get_current_user
+from app.core.dependencies import get_current_user
 from app.models.area_model import Area
 from app.models.user_model import User
 from app.schemas.area_schema import AreaOut, AreaCreate, AreaUpdate

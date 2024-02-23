@@ -5,7 +5,7 @@ This module defines FastAPI routes for retrieving information related to cities 
 """
 from fastapi import APIRouter, Depends
 
-from app.api.deps.user_deps import get_current_user
+from app.core.dependencies import get_current_user
 from app.models.user_model import User
 from app.services.forecast_service import ForecastService
 

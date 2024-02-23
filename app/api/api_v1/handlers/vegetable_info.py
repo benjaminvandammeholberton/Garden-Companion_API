@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from typing import List
 from uuid import UUID
 
-from app.api.deps.user_deps import get_current_user
+from app.core.dependencies import get_current_user
 from app.models.vegetable_info_model import VegetableInfo
 from app.models.user_model import User
 from app.schemas.vegetable_info_schema import VegetableInfoOut, VegetableInfoCreate, VegetableInfoUpdate
