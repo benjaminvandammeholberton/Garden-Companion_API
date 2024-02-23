@@ -24,8 +24,8 @@ class VegetableManagerService:
         :return: List of vegetables.
         """
         vegetables = await VegetableManager.find(VegetableManager.owner.id
-                                              == user.id, fetch_links=True).to_list()
- 
+                                                 == user.id, fetch_links=True).to_list()
+
         return vegetables
 
     @staticmethod
@@ -59,7 +59,7 @@ class VegetableManagerService:
         :return: Retrieved vegetable.
         """
         vegetable = await VegetableManager.find_one(VegetableManager.vegetable_manager_id == vegetable_manager_id,
-                                   VegetableManager.owner.id == current_user.id)
+                                                    VegetableManager.owner.id == current_user.id)
         return vegetable
 
     @staticmethod
@@ -80,20 +80,21 @@ class VegetableManagerService:
             data.area = area
 
         # List of date fields to process
-        date_fields = ['remove_date', 'sowing_date', 'planting_date', 'harvest_date']
+        date_fields = ['remove_date', 'sowing_date',
+                       'planting_date', 'harvest_date']
 
         # Convert each date field to datetime if it exists in the data
         for field in date_fields:
             date_value = getattr(data, field, None)
             if date_value:
-                setattr(data, field, datetime.combine(date_value, datetime.min.time()))
+                setattr(data, field, datetime.combine(
+                    date_value, datetime.min.time()))
 
         vegetable = await VegetableManagerService.retrieve_vegetable(current_user, vegetable_id)
         await vegetable.update({"$set": data.dict(exclude_unset=True)})
         vegetable.update_updated_at()
         await vegetable.save()
         return vegetable
-
 
     @staticmethod
     async def delete_vegetable(current_user: User, vegetable_id: UUID):
@@ -108,7 +109,7 @@ class VegetableManagerService:
         if vegetable:
             await vegetable.delete()
         return None
-    
+
     @staticmethod
     async def delete_all_vegetables_in_area(current_user: User, area_id: UUID):
         """

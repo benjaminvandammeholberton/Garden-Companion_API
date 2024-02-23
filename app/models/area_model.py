@@ -2,10 +2,9 @@
 Area model representing a document in a database.
 """
 
-from beanie import BackLink, Document, Indexed, Link, before_event, Replace, Insert
+from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from datetime import datetime
 from pydantic import Field
-from typing import List, Optional
 from uuid import UUID, uuid4
 
 from app.models.user_model import User
@@ -13,7 +12,6 @@ from app.models.user_model import User
 
 class Area(Document):
     """
-    
     """
     area_id: UUID = Field(default_factory=uuid4, unique=True)
     name: Indexed(str)
@@ -48,7 +46,7 @@ class Area(Document):
         if isinstance(other, Area):
             return self.area_id == other.area_id
         return False
-    
+
     @before_event([Replace, Insert])
     def update_updated_at(self):
         """

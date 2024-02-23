@@ -55,6 +55,7 @@ class User(Document):
     is_verified: bool = Field(default=False)
     forget_password: Optional[str] = None
     expiration_forget_password: Optional[datetime] = None
+    postal_code: Optional[int] = None
 
     def __repr__(self) -> str:
         """
@@ -98,7 +99,7 @@ class User(Document):
         :return: User with the specified email.
         """
         return await self.find_one(self.email == email)
-    
+
     @before_event([Replace, Insert])
     def update_updated_at(self):
         """

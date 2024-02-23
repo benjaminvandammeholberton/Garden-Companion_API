@@ -45,6 +45,10 @@ class UserUpdate(BaseModel):
                                      title='Last Name',
                                      max_length=25,
                                      min_length=6)
+    postal_code: Optional[int] = Field(None,
+                                       title='Postal Code',
+                                       ge=1,
+                                       gl=8)
 
 
 class UserResetPassword(BaseModel):

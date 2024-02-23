@@ -34,9 +34,9 @@ class ChatBotService:
             messages=[
                 system_message,
                 {"role": "user", "content": f'${data.user_input}'}
-                ],
+            ],
             temperature=0.1,
-            )
+        )
         return (completion.choices[0].message.content)
 
     @staticmethod
@@ -48,7 +48,7 @@ class ChatBotService:
         await current_user.update({
             "$inc": {"chat_bot_day_requests": 1, "chat_bot_total_requests": 1},
             "$set": {"last_request_datetime": datetime.now()}
-            })
+        })
         await current_user.save()
 
     @staticmethod
