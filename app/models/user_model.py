@@ -55,7 +55,7 @@ class User(Document):
     is_verified: bool = Field(default=False)
     forget_password: Optional[str] = None
     expiration_forget_password: Optional[datetime] = None
-    postal_code: Optional[int] = None
+    postal_code: Optional[str] = None
 
     def __repr__(self) -> str:
         """
