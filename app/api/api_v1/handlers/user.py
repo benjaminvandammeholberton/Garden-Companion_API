@@ -21,10 +21,11 @@ async def create_user(data: UserAuth):
 
     :param data: Data for creating a new user.
     :return: Created user details.
-    :raises HTTPException 400: If a user with the same email or\
+    :raises HTTPException 400: If a user with the same email or
         username already exists.
     """
     try:
+        print(data)
         return await UserService.create_user(data)
     except pymongo.errors.DuplicateKeyError:
         raise HTTPException(

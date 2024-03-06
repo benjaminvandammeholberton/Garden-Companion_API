@@ -58,7 +58,7 @@ app.add_middleware(
 )
 
 
-@app.get('/')
+@app.get('/', summary="Test is the server is running", tags=["test_server"])
 def test_server():
     """
     This function is a test endpoint for checking if the server is running.
