@@ -25,7 +25,6 @@ async def create_user(data: UserAuth):
         username already exists.
     """
     try:
-        print(data)
         return await UserService.create_user(data)
     except pymongo.errors.DuplicateKeyError:
         raise HTTPException(
