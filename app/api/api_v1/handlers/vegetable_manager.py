@@ -14,8 +14,9 @@ from app.services.vegetable_manager_service import VegetableManagerService
 
 vegetable_manager_router = APIRouter()
 
+
 @vegetable_manager_router.get('/', summary='Get all vegetable_managers of the user',
-                 response_model=List[VegetableManagerOut])
+                              response_model=List[VegetableManagerOut])
 async def list(current_user: User = Depends(get_current_user)):
     """
     Endpoint to retrieve all vegetable_managers of the current user.
@@ -28,7 +29,7 @@ async def list(current_user: User = Depends(get_current_user)):
 
 @vegetable_manager_router.post('/create', summary="Create VegetableManager", response_model=VegetableManagerOut)
 async def create_vegetable_manager(data: VegetableManagerCreate,
-                      current_user: User = Depends(get_current_user)):
+                                   current_user: User = Depends(get_current_user)):
     """
     Endpoint to create a new vegetable_manager for the current user.
 
@@ -40,7 +41,7 @@ async def create_vegetable_manager(data: VegetableManagerCreate,
 
 
 @vegetable_manager_router.get('/{vegetable_manager_id}', summary='Get a vegetable_manager by vegetable_manager_id',
-                 response_model=VegetableManager)
+                              response_model=VegetableManager)
 async def retrieve(vegetable_manager_id: UUID,
                    current_user: User = Depends(get_current_user)):
     """
@@ -54,7 +55,7 @@ async def retrieve(vegetable_manager_id: UUID,
 
 
 @vegetable_manager_router.put('/{vegetable_manager_id}', summary="Update vegetable_manager by vegetable_manager_id",
-                 response_model=VegetableManagerOut)
+                              )
 async def update(vegetable_manager_id: UUID, data: VegetableManagerUpdate,
                  current_user: User = Depends(get_current_user)):
     """
