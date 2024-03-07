@@ -16,7 +16,7 @@ from app.models.user_model import User
 
 class VegetableManager(Document):
     """
-    
+
     """
     vegetable_manager_id: UUID = Field(default_factory=uuid4, unique=True)
     name: Indexed(str)
@@ -61,7 +61,7 @@ class VegetableManager(Document):
         if isinstance(other, VegetableManager):
             return self.vegetable_manager_id == other.vegetable_manager_id
         return False
-    
+
     @before_event([Replace, Insert])
     def update_updated_at(self):
         """
@@ -69,7 +69,6 @@ class VegetableManager(Document):
         """
         self.updated_at = datetime.utcnow()
 
-    
     class Settings:
         """
         Settings class for the VegetableManager model.

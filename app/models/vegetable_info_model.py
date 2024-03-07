@@ -10,9 +10,10 @@ from uuid import UUID, uuid4
 
 from app.models.user_model import User
 
+
 class VegetableInfo(Document):
     """
-    
+
     """
     vegetable_info_id: UUID = Field(default_factory=uuid4, unique=True)
     name: Indexed(str)
@@ -54,14 +55,14 @@ class VegetableInfo(Document):
         if isinstance(other, VegetableInfo):
             return self.vegetable_info_id == other.vegetable_info_id
         return False
-    
+
     @before_event([Replace, Insert])
     def update_updated_at(self):
         """
         Update the `updated_at` timestamp before Replace or Insert events.
         """
         self.updated_at = datetime.utcnow()
-    
+
     class Settings:
         """
         Settings class for the VegetableInfo model.

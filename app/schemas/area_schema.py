@@ -21,7 +21,6 @@ class AreaCreate(BaseModel):
     sowing_area: bool = Field(..., title='Sowing Area')
 
 
-
 class AreaUpdate(BaseModel):
     """
     Pydantic model for updating Area.
@@ -30,7 +29,8 @@ class AreaUpdate(BaseModel):
     - name (Optional[str]): The updated name of the area.
     - surface (int): The surface of the area.
     """
-    name: Optional[str] = Field(None, title='Name', max_length=25, min_length=1)
+    name: Optional[str] = Field(
+        None, title='Name', max_length=25, min_length=1)
     surface: Optional[float] = Field(None, title='Surface')
     sowing_area: Optional[bool] = Field(None, title='Sowing Area')
 

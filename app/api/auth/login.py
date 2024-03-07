@@ -8,7 +8,7 @@ from jose import jwt
 from pydantic import ValidationError
 from typing import Any
 
-from app.api.deps.user_deps import get_current_user
+from app.core.dependencies import get_current_user
 from app.core.config import settings
 from app.core.security import create_access_token, create_refresh_token
 from app.models.user_model import User
@@ -38,7 +38,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect email or password"
         )
-    if user.is_verified == False:
+    if user.is_verified is False:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Account not verified"

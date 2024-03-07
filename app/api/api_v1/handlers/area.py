@@ -1,17 +1,16 @@
 """
-
 """
 from fastapi import APIRouter, Depends
 from typing import List
 from uuid import UUID
 
-from app.api.deps.user_deps import get_current_user
-from app.models.area_model import Area
+from app.core.dependencies import get_current_user
 from app.models.user_model import User
 from app.schemas.area_schema import AreaOut, AreaCreate, AreaUpdate
 from app.services.area_service import AreaService
 
 area_router = APIRouter()
+
 
 @area_router.get('/', summary='Get all areas of the user',
                  response_model=List[AreaOut])

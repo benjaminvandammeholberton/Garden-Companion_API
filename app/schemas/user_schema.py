@@ -11,11 +11,6 @@ from uuid import UUID
 class UserAuth(BaseModel):
     """
     UserAuth class for user authentication.
-
-    Attributes:
-    - email (EmailStr): The user's email.
-    - username (str): The user's username.
-    - password (str): The user's password.
     """
     email: EmailStr = Field(..., description="user email")
     username: str = Field(..., min_length=5,
@@ -27,15 +22,6 @@ class UserAuth(BaseModel):
 class UserOut(BaseModel):
     """
     UserOut class for representing user output.
-
-    Attributes:
-    - user_id (UUID): The user's UUID.
-    - username (str): The user's username.
-    - email (EmailStr): The user's email.
-    - first_name (Optional[str]): The user's first name.
-    - last_name (Optional[str]): The user's last name.
-    - disabled (Optional[bool]): Indicates if the user is\
-        disabled (default is False).
     """
     user_id: UUID
     username: str
@@ -50,19 +36,43 @@ class UserOut(BaseModel):
 
 class UserUpdate(BaseModel):
     """
-
     """
-    first_name: Optional[str] = Field(None, title='First Name',
-                                 max_length=25, min_length=6)
-    last_name: Optional[str] = Field(None, title='Last Name',
-                                 max_length=25, min_length=6)
+    first_name: Optional[str] = Field(None,
+                                      title='First Name',
+                                      max_length=25,
+                                      min_length=6)
+    last_name: Optional[str] = Field(None,
+                                     title='Last Name',
+                                     max_length=25,
+                                     min_length=6)
+    postal_code: Optional[str] = Field(None,
+                                       title='Postal Code',
+                                       ge=1,
+                                       gl=8)
+
 
 class UserResetPassword(BaseModel):
     """
-    
     """
-    token: str = Field(..., min_length=15, max_length=35, title='token'),
-    password: str = Field(..., min_length=5, max_length=50, title='user password')
-    
+    token: str = Field(...,
+                       min_length=15,
+                       max_length=35,
+                       title='token'
+                       ),
+    password: str = Field(...,
+                          min_length=5,
+                          max_length=50,
+                          title='user password'
+                          )
+
+
 class EmailSchema(BaseModel):
+    """
+    """
     email: EmailStr = Field(..., title="user's email Adress")
+
+
+class UserChatBotDailyRequest(BaseModel):
+    """
+    """
+    chat_bot_day_requests: int = Field(..., title="user's ChatBot Day Request")

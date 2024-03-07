@@ -1,21 +1,21 @@
 """
 UserService module for handling user-related operations.
 """
-import json
+
 from typing import Optional
 from uuid import UUID
-from pathlib import Path
 
-from app.core.security import create_access_token, get_password, verify_password
+from app.api.auth.email_verification import send_verification_email
+from app.core.security import (create_access_token,
+                               get_password,
+                               verify_password)
 from app.models.user_model import User
-from app.models.vegetable_info_model import VegetableInfo
-from app.schemas.user_schema import UserAuth
-from app.schemas.vegetable_info_schema import VegetableInfoCreate
+from app.schemas.user_schema import UserAuth, UserUpdate
 from app.services.area_service import AreaService
 from app.services.todo_service import TodoService
 from app.services.vegetable_info_service import VegetableInfoService
 from app.services.vegetable_manager_service import VegetableManagerService
-from app.api.auth.email_verification import send_verification_email
+
 
 class UserService:
     @staticmethod
@@ -32,14 +32,8 @@ class UserService:
             hashed_password=get_password(user.password)
         )
         await user_in.save()
-
-        # Load initial vegetable information from JSON file
-        initial_vegetable_info_file = Path("./vegetable_info_data.json")
-        with open(initial_vegetable_info_file, "r") as file:
-            initial_vegetable_info = json.load(file)
-        # Link the vegetable information to the user
-        for veg_info_data in initial_vegetable_info:
-            await VegetableInfoService.create_vegetable(user_in, VegetableInfoCreate(**veg_info_data))
+        # add vegetable_info to the user
+        await VegetableInfoService.add_all_vegetable_info_to_user(user_in)
         await send_verification_email(user.email, user)
         return user_in
 
@@ -84,17 +78,13 @@ class UserService:
 
     @staticmethod
     async def get_user_by_username(username: str) -> Optional[User]:
-        """
-
-        """
+        """ """
         user = await User.find_one(User.username == username)
         return user
-    
+
     @staticmethod
     async def update_user_password(data: dict, current_user: User):
-        """
-        
-        """
+        """ """
         hashed_password = get_password(data['new_password'])
         print(hashed_password)
         current_user.hashed_password = hashed_password
@@ -102,22 +92,31 @@ class UserService:
         await current_user.save()
         new_access_token = create_access_token(current_user.user_id)
         return {"new_access_token": new_access_token}
-    
+
     @staticmethod
     async def delete_user(current_user: User):
-        """
-        
-        """
+        """ """
         todos = await TodoService.list_todos(current_user)
         for todo in todos:
             await todo.delete()
-        vegetables_infos = await VegetableInfoService.list_vegetables(current_user)
+        vegetables_infos = await VegetableInfoService.list_vegetables(
+            current_user
+        )
         for vegetable in vegetables_infos:
             await vegetable.delete()
-        vegetables_manager = await VegetableManagerService.list_vegetables(current_user)
+        vegetables_manager = await VegetableManagerService.list_vegetables(
+            current_user
+        )
         for vegetable in vegetables_manager:
             await vegetable.delete()
         areas = await AreaService.list_areas(current_user)
         for area in areas:
             await area.delete()
         await current_user.delete()
+
+    @staticmethod
+    async def update_user(data: UserUpdate, user: User):
+        """
+        Update user
+        """
+        await user.update({"$set": data})

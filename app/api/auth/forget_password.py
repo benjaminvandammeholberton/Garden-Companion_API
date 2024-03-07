@@ -6,7 +6,7 @@ functionality. The endpoints are:
 
 1. `send_reset_password_email`: This endpoint sends a password reset email to
 the provided email address. It takes an `EmailSchema` object as input, which
-contains the email address to send the password reset email to. It returns a 
+contains the email address to send the password reset email to. It returns a
 JSON response indicating the status of the email sending process.
 
 2. `update_password`: This endpoint updates the password of the user associated
@@ -19,17 +19,18 @@ responses. They also use the `FastMail` library for sending emails, and the
 `User` model for interacting with the database.
 """
 from datetime import datetime, timedelta
-from fastapi import FastAPI, HTTPException, APIRouter, status
+from fastapi import HTTPException, APIRouter, status
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
-from fastapi.responses import RedirectResponse
-from starlette.responses import JSONResponse
+from fastapi.responses import JSONResponse
 
-from app.core.security import get_password, create_token
+from app.core.email_token_handler import EmailTokenHandler
 from app.core.config import settings
+from app.core.security import get_password
 from app.models.user_model import User
 from app.schemas.user_schema import UserResetPassword, EmailSchema
 
 password_reset = APIRouter()
+handler = EmailTokenHandler()
 
 conf = ConnectionConfig(
     MAIL_USERNAME=settings.MAIL_USERNAME,
@@ -62,7 +63,7 @@ async def send_reset_password_email(data: EmailSchema) -> JSONResponse:
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail="email fot found")
-    _token = create_token(data.email)
+    _token = handler.create_token(data.email)
     user.forget_password = _token
     user.expiration_forget_password = datetime.now()
     await user.save()
