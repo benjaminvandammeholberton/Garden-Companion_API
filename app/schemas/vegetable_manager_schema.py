@@ -87,4 +87,4 @@ class VegetableManagerOut(BaseModel):
     harvest_unit: Optional[str]
     remove_date: Optional[date]
     notes: Optional[str]
-    area: AreaOut
+    area: Optional[AreaOut]
