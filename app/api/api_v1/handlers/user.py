@@ -1,3 +1,4 @@
+
 """
 API router for handling User-related operations.
 """
@@ -42,7 +43,9 @@ async def get_info(current_user: User = Depends(get_current_user)):
 
 @user_router.put('/update_password', summary="Update the user password")
 async def update_password(
-        data: dict, current_user: User = Depends(get_current_user)):
+        data: dict,
+        current_user: User = Depends(get_current_user)
+):
     """
     """
     return await UserService.update_user_password(data, current_user)
@@ -50,7 +53,9 @@ async def update_password(
 
 @user_router.post('/verify_password', summary="Verify the user password")
 async def verify_user_password(
-        data: dict, current_user: User = Depends(get_current_user)):
+        data: dict,
+        current_user: User = Depends(get_current_user)
+):
     """
     """
     return verify_password(data['password'], current_user.hashed_password)

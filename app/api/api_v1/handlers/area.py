@@ -12,8 +12,11 @@ from app.services.area_service import AreaService
 area_router = APIRouter()
 
 
-@area_router.get('/', summary='Get all areas of the user',
-                 response_model=List[AreaOut])
+@area_router.get(
+    '/',
+    summary='Get all areas of the user',
+    response_model=List[AreaOut]
+)
 async def list(current_user: User = Depends(get_current_user)):
     """
     Endpoint to retrieve all areas of the current user.
@@ -25,8 +28,10 @@ async def list(current_user: User = Depends(get_current_user)):
 
 
 @area_router.post('/create', summary="Create Area", response_model=AreaOut)
-async def create_area(data: AreaCreate,
-                      current_user: User = Depends(get_current_user)):
+async def create_area(
+    data: AreaCreate,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to create a new area for the current user.
 
@@ -37,8 +42,11 @@ async def create_area(data: AreaCreate,
     return await AreaService.create_area(current_user, data)
 
 
-@area_router.get('/{area_id}', summary='Get a area by area_id',
-                 response_model=AreaOut)
+@area_router.get(
+    '/{area_id}',
+    summary='Get a area by area_id',
+    response_model=AreaOut
+)
 async def retrieve(area_id: UUID,
                    current_user: User = Depends(get_current_user)):
     """
@@ -51,10 +59,16 @@ async def retrieve(area_id: UUID,
     return await AreaService.retrieve_area(current_user, area_id)
 
 
-@area_router.put('/{area_id}', summary="Update area by area_id",
-                 response_model=AreaOut)
-async def update(area_id: UUID, data: AreaUpdate,
-                 current_user: User = Depends(get_current_user)):
+@area_router.put(
+    '/{area_id}',
+    summary="Update area by area_id",
+    response_model=AreaOut
+)
+async def update(
+    area_id: UUID,
+    data: AreaUpdate,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to update a area by its ID.
 
@@ -67,8 +81,10 @@ async def update(area_id: UUID, data: AreaUpdate,
 
 
 @area_router.delete('/{area_id}', summary="Delete area by area_id")
-async def delete(area_id: UUID,
-                 current_user: User = Depends(get_current_user)):
+async def delete(
+    area_id: UUID,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to delete a area by its ID.
 

@@ -31,7 +31,9 @@ conf = ConnectionConfig(
 
 
 async def send_verification_email(
-        email: EmailSchema, user: User) -> JSONResponse:
+    email: EmailSchema,
+    user: User
+) -> JSONResponse:
     """
     Sends a verification email to the provided email address.
 
@@ -86,11 +88,15 @@ async def confirm_email(token: str):
     verification = handler.verify_token(token)
     await update_verified_user(verification['email'])
     if verification['check']:
-        return RedirectResponse(url=f'{ settings.FRONT_END_URL }/login.html',
-                                status_code=302)
+        return RedirectResponse(
+            url=f'{ settings.FRONT_END_URL }/login.html',
+            status_code=302
+        )
     if verification is None:
         raise HTTPException(
-            status_code=400, detail="Your account has not been verified")
+            status_code=400,
+            detail="Your account has not been verified"
+        )
 
 
 async def update_verified_user(email: EmailSchema):

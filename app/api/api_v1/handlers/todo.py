@@ -7,7 +7,6 @@ from typing import List
 from uuid import UUID
 
 from app.core.dependencies import get_current_user
-from app.models.todo_model import Todo
 from app.models.user_model import User
 from app.schemas.todo_schema import TodoOut, TodoCreate, TodoUpdate
 from app.services.todo_service import TodoService
@@ -16,8 +15,11 @@ from app.services.todo_service import TodoService
 todo_router = APIRouter()
 
 
-@todo_router.get('/', summary='Get all todos of the user',
-                 response_model=List[TodoOut])
+@todo_router.get(
+    '/',
+    summary='Get all todos of the user',
+    response_model=List[TodoOut]
+)
 async def list(current_user: User = Depends(get_current_user)):
     """
     Endpoint to retrieve all todos of the current user.
@@ -29,8 +31,10 @@ async def list(current_user: User = Depends(get_current_user)):
 
 
 @todo_router.post('/create', summary="Create Todo", response_model=TodoOut)
-async def create_todo(data: TodoCreate,
-                      current_user: User = Depends(get_current_user)):
+async def create_todo(
+    data: TodoCreate,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to create a new todo for the current user.
 
@@ -41,10 +45,15 @@ async def create_todo(data: TodoCreate,
     return await TodoService.create_todo(current_user, data)
 
 
-@todo_router.get('/{todo_id}', summary='Get a todo by todo_id',
-                 response_model=TodoOut)
-async def retrieve(todo_id: UUID,
-                   current_user: User = Depends(get_current_user)):
+@todo_router.get(
+    '/{todo_id}',
+    summary='Get a todo by todo_id',
+    response_model=TodoOut
+)
+async def retrieve(
+    todo_id: UUID,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to retrieve a todo by its ID.
 
@@ -55,10 +64,16 @@ async def retrieve(todo_id: UUID,
     return await TodoService.retrieve_todo(current_user, todo_id)
 
 
-@todo_router.put('/{todo_id}', summary="Update todo by todo_id",
-                 response_model=TodoOut)
-async def update(todo_id: UUID, data: TodoUpdate,
-                 current_user: User = Depends(get_current_user)):
+@todo_router.put(
+    '/{todo_id}',
+    summary="Update todo by todo_id",
+    response_model=TodoOut
+)
+async def update(
+    todo_id: UUID,
+    data: TodoUpdate,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to update a todo by its ID.
 
@@ -71,8 +86,10 @@ async def update(todo_id: UUID, data: TodoUpdate,
 
 
 @todo_router.delete('/{todo_id}', summary="Delete todo by todo_id")
-async def delete(todo_id: UUID,
-                 current_user: User = Depends(get_current_user)):
+async def delete(
+    todo_id: UUID,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to delete a todo by its ID.
 
