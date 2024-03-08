@@ -1,6 +1,6 @@
 """
 """
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 from uuid import UUID
 
@@ -8,6 +8,7 @@ from app.core.dependencies import get_current_user
 from app.models.user_model import User
 from app.schemas.area_schema import AreaOut, AreaCreate, AreaUpdate
 from app.services.area_service import AreaService
+from app.services.user_service import UserService
 
 area_router = APIRouter()
 
@@ -25,6 +26,27 @@ async def list(current_user: User = Depends(get_current_user)):
     :return: List of areas.
     """
     return await AreaService.list_areas(current_user)
+
+
+@area_router.get(
+    '/{username}',
+    summary='Get all areas from a specific user',
+    response_model=List[AreaOut]
+)
+async def get_vegetables_from_user(username: str, _=Depends(get_current_user)):
+    """
+    Endpoint to retrieve all areas from a specific user.
+
+    :param username: the username of the user we want to get areas
+    :return: List of areas
+    """
+    user = await UserService.get_user_by_username(username)
+    if user is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Username doesn't exist"
+        )
+    return await AreaService.list_areas(user=user)
 
 
 @area_router.post('/create', summary="Create Area", response_model=AreaOut)
