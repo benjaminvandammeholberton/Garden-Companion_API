@@ -65,7 +65,11 @@ class VegetableManagerUpdate(BaseModel):
     name: Optional[str] = Field(
         None, title='Name', max_length=25, min_length=1)
     variety: Optional[str] = Field(
-        None, title='Variety', max_length=25, min_length=1)
+        None,
+        title='Variety',
+        max_length=25,
+        min_length=1
+    )
     quantity: Optional[conint(ge=1, le=1000)] = Field(None, title='Quantity')
     sowed: Optional[bool] = Field(None, title='Sowed')
     planted: Optional[bool] = Field(None, title='Planted')
@@ -118,4 +122,4 @@ class VegetableManagerOut(BaseModel):
     harvest_unit: Optional[str]
     remove_date: Optional[date]
     notes: Optional[str]
-    area: Optional[AreaOut]
+    area: AreaOut

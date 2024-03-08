@@ -3,7 +3,6 @@ VegetableManagerService module for handling CRUD operations on
     VegetableManager objects.
 """
 
-from datetime import datetime
 from typing import List
 from uuid import UUID
 
@@ -53,7 +52,7 @@ class VegetableManagerService:
             raise ValueError(f"Area with ID {data.area} not found.")
 
         # Modify data with the retrieved area
-        data_dict = data.dict()
+        data_dict = data.model_dump()
         data_dict['area'] = area
 
         vegetable = VegetableManager(**data_dict, owner=user)
@@ -73,7 +72,7 @@ class VegetableManagerService:
         """
         vegetable = await VegetableManager.find_one(
             VegetableManager.vegetable_manager_id == vegetable_manager_id,
-            VegetableManager.owner.id == current_user.id
+            VegetableManager.owner.id == current_user.id, fetch_links=True
         )
         return vegetable
 
@@ -101,16 +100,14 @@ class VegetableManagerService:
                 raise ValueError(f"Area with ID {data.area} not found.")
             data.area = area
 
-        # List of date fields to process
-        date_fields = ['remove_date', 'sowing_date',
-                       'planting_date', 'harvest_date']
+        # date_fields = ['remove_date', 'sowing_date',
+        #                'planting_date', 'harvest_date']
 
-        # Convert each date field to datetime if it exists in the data
-        for field in date_fields:
-            date_value = getattr(data, field, None)
-            if date_value:
-                setattr(data, field, datetime.combine(
-                    date_value, datetime.min.time()))
+        # for field in date_fields:
+        #     date_value = getattr(data, field, None)
+        #     if date_value:
+        #         setattr(data, field, datetime.combine(
+        #             date_value, datetime.min.time()))
 
         vegetable = await VegetableManagerService.retrieve_vegetable(
             current_user,
