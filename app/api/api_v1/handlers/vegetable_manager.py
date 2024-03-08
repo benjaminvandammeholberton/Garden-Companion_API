@@ -37,7 +37,7 @@ async def list(current_user: User = Depends(get_current_user)):
 
 
 @vegetable_manager_router.get(
-    '/{username}',
+    '/all/{username}',
     summary='Get all vegetables from a specific user',
     response_model=List[VegetableManagerOut]
 )

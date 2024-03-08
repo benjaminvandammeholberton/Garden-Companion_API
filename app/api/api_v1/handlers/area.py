@@ -29,7 +29,7 @@ async def list(current_user: User = Depends(get_current_user)):
 
 
 @area_router.get(
-    '/{username}',
+    '/all/{username}',
     summary='Get all areas from a specific user',
     response_model=List[AreaOut]
 )
