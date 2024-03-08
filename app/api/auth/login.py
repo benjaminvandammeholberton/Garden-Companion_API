@@ -19,9 +19,11 @@ from app.services.user_service import UserService
 auth_router = APIRouter()
 
 
-@auth_router.post('/login',
-                  summary="Create access and refresh token for user",
-                  response_model=TokenSchema)
+@auth_router.post(
+    '/login',
+    summary="Create access and refresh token for user",
+    response_model=TokenSchema
+)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
     """
     Endpoint to authenticate a user and generate access and refresh tokens.
@@ -31,8 +33,10 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
     :return: Dictionary containing access and refresh tokens.
     :raises HTTPException 400: If the provided credentials are incorrect.
     """
-    user = await UserService.authenticate(email=form_data.username,
-                                          password=form_data.password)
+    user = await UserService.authenticate(
+        email=form_data.username,
+        password=form_data.password
+    )
     if not user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -50,9 +54,11 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
     }
 
 
-@auth_router.post('/test-token',
-                  summary="Test if the access token is valid",
-                  response_model=UserOut)
+@auth_router.post(
+    '/test-token',
+    summary="Test if the access token is valid",
+    response_model=UserOut
+)
 async def test_token(user: User = Depends(get_current_user)):
     """
     Endpoint to test if the access token is valid.
@@ -63,8 +69,11 @@ async def test_token(user: User = Depends(get_current_user)):
     return user
 
 
-@auth_router.post('/refresh', summary="Refresh token",
-                  response_model=TokenSchema)
+@auth_router.post(
+    '/refresh',
+    summary="Refresh token",
+    response_model=TokenSchema
+)
 async def refresh_token(refresh_token: str = Body(...)):
     """
     Endpoint to refresh an access token using a valid refresh token.

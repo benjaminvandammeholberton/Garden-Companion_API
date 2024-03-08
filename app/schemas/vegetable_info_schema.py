@@ -7,8 +7,6 @@ from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel, Field, conint, confloat
 
-from app.schemas.area_schema import AreaOut
-
 
 class VegetableInfoCreate(BaseModel):
     """
@@ -30,20 +28,36 @@ class VegetableInfoCreate(BaseModel):
     name: str = Field(..., title='Name', max_length=25, min_length=1)
     category: str = Field(..., title='Family', max_length=55, min_length=1)
     start_indoor: Optional[date] = Field(
-        None, title='Date to start indoor sowing')
+        None,
+        title='Date to start indoor sowing'
+    )
     start_outdoor: Optional[date] = Field(
-        None, title='Date to start outdoor sowing')
+        None,
+        title='Date to start outdoor sowing'
+    )
     end: date = Field(..., title='Last date for sowing')
-    water_needs: conint(ge=1, le=3) = Field(...,
-                                            title='Water Needs (scale: 0 to 5)')
-    cold_resistance: conint(ge=0, le=2) = Field(...,
-                                                title='Cold Resistance (scale: 0 to 3)')
-    spacing_on_row: confloat(
-        ge=0.0, le=10000.0) = Field(..., title='Spacing on row (in centimeters)')
-    germination: conint(ge=-150, le=+150) = Field(...,
-                                                  title='Soil temperature for germination (in Celsius)')
-    description: str = Field(..., title='Description',
-                             max_length=755, min_length=1)
+    water_needs: conint(ge=1, le=3) = Field(
+        ...,
+        title='Water Needs (scale: 0 to 5)'
+    )
+    cold_resistance: conint(ge=0, le=2) = Field(
+        ...,
+        title='Cold Resistance (scale: 0 to 3)'
+    )
+    spacing_on_row: confloat(ge=0.0, le=10000.0) = Field(
+        ...,
+        title='Spacing on row (in centimeters)'
+    )
+    germination: conint(ge=-150, le=+150) = Field(
+        ...,
+        title='Soil temperature for germination (in Celsius)'
+    )
+    description: str = Field(
+        ...,
+        title='Description',
+        max_length=755,
+        min_length=1
+    )
 
 
 class VegetableInfoUpdate(BaseModel):
@@ -55,34 +69,58 @@ class VegetableInfoUpdate(BaseModel):
     - family (Optional[str]): The updated family of the vegetable.
     - category (Optional[str]): The updated category of the vegetable.
     - start_indoor (Optional[int]): Updated week number to start indoor sowing.
-    - start_outdoor (Optional[int]): Updated week number to start outdoor sowing.
+    - start_outdoor (Optional[int]): Updated week number to start outdoor
+        sowing.
     - end (Optional[int]): Updated last week number for sowing.
     - water_needs (Optional[int]): Updated water needs on a scale of 0 to 5.
-    - cold_resistance (Optional[int]): Updated cold resistance on a scale of 0 to 3.
+    - cold_resistance (Optional[int]): Updated cold resistance on a scale of 0
+        to 3.
     - spacing_on_row (Optional[float]): Updated spacing on row in centimeters.
-    - germination (Optional[int]): Updated soil temperature for germination in Celsius.
+    - germination (Optional[int]): Updated soil temperature for germination in
+        Celsius.
     - description (Optional[str]): Updated description of the vegetable.
     """
     name: Optional[str] = Field(
         None, title='Name', max_length=25, min_length=1)
     category: Optional[str] = Field(
-        None, title='Family', max_length=55, min_length=1)
+        None,
+        title='Family',
+        max_length=55,
+        min_length=1
+    )
     start_indoor: Optional[conint(ge=1, le=52)] = Field(
-        None, title='Week number to start indoor sowing')
+        None,
+        title='Week number to start indoor sowing'
+    )
     start_outdoor: Optional[conint(ge=1, le=52)] = Field(
-        None, title='Week number to start outdoor sowing')
+        None,
+        title='Week number to start outdoor sowing'
+    )
     end: Optional[conint(ge=1, le=52)] = Field(
-        None, title='Last week number for sowing')
+        None,
+        title='Last week number for sowing'
+    )
     water_needs: Optional[conint(ge=0, le=5)] = Field(
-        None, title='Water Needs (scale: 0 to 5)')
+        None,
+        title='Water Needs (scale: 0 to 5)'
+    )
     cold_resistance: Optional[conint(ge=0, le=5)] = Field(
-        None, title='Cold Resistance (scale: 0 to 3)')
+        None,
+        title='Cold Resistance (scale: 0 to 3)'
+    )
     spacing_on_row: Optional[confloat(ge=0.0, le=10000.0)] = Field(
-        None, title='Spacing on row (in centimeters)')
-    germination: Optional[conint(ge=-150, le=+150)] = Field(None,
-                                                            title='Soil temperature for germination (in Celsius)')
+        None,
+        title='Spacing on row (in centimeters)'
+    )
+    germination: Optional[conint(ge=-150, le=+150)] = Field(
+        None,
+        title='Soil temperature for germination (in Celsius)'
+    )
     description: Optional[str] = Field(
-        None, title='Description', max_length=755, min_length=1)
+        None, title='Description',
+        max_length=755,
+        min_length=1
+    )
 
 
 class VegetableInfoOut(BaseModel):

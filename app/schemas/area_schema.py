@@ -5,7 +5,7 @@ Area-related Pydantic models for input, update, and output.
 from datetime import datetime
 from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, Field, conint, confloat
+from pydantic import BaseModel, Field
 
 
 class AreaCreate(BaseModel):
@@ -30,7 +30,11 @@ class AreaUpdate(BaseModel):
     - surface (int): The surface of the area.
     """
     name: Optional[str] = Field(
-        None, title='Name', max_length=25, min_length=1)
+        None,
+        title='Name',
+        max_length=25,
+        min_length=1
+    )
     surface: Optional[float] = Field(None, title='Surface')
     sowing_area: Optional[bool] = Field(None, title='Sowing Area')
 

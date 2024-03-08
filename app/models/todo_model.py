@@ -5,7 +5,6 @@ Todo model representing a document in a database.
 from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from datetime import datetime
 from pydantic import Field
-from typing import Optional
 from uuid import UUID, uuid4
 
 from app.models.user_model import User

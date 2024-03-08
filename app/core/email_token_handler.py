@@ -1,9 +1,11 @@
 """
 Module to handle email verification and password reset tokens.
 """
-from itsdangerous import (URLSafeTimedSerializer,
-                          BadTimeSignature,
-                          SignatureExpired)
+from itsdangerous import (
+    URLSafeTimedSerializer,
+    BadTimeSignature,
+    SignatureExpired
+)
 
 from app.schemas.user_schema import EmailSchema
 from app.core.config import settings
@@ -13,6 +15,7 @@ class EmailTokenHandler:
     """
     Class to handle email verification and password reset tokens.
     """
+
     def __init__(self):
         """
         Initialize the EmailTokenHandler with the secret key from settings.

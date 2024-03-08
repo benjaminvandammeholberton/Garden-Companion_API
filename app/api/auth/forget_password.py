@@ -61,8 +61,10 @@ async def send_reset_password_email(data: EmailSchema) -> JSONResponse:
     """
     user = await User.find_one(User.email == data.email)
     if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="email fot found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="email fot found"
+        )
     _token = handler.create_token(data.email)
     user.forget_password = _token
     user.expiration_forget_password = datetime.now()
@@ -101,8 +103,10 @@ async def send_reset_password_email(data: EmailSchema) -> JSONResponse:
 
     fm = FastMail(conf)
     await fm.send_message(message)
-    return JSONResponse(status_code=200,
-                        content={"message": "email has been sent"})
+    return JSONResponse(
+        status_code=200,
+        content={"message": "email has been sent"}
+    )
 
 
 @password_reset.put("/")
@@ -120,17 +124,23 @@ async def update_password(data: UserResetPassword) -> JSONResponse:
     """
     user = await User.find_one(User.forget_password == data.token)
     if not user:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-                            detail="The token provided is not valid")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="The token provided is not valid"
+        )
     current_time = datetime.now()
     token_datetime = user.expiration_forget_password
     time_of_token = current_time - token_datetime
     expiration_time = timedelta(minutes=30)
     if time_of_token > expiration_time:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="The link has expired, ask for another one")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="The link has expired, ask for another one"
+        )
     hashed_password = get_password(data.password)
     user.hashed_password = hashed_password
     await user.save()
-    return JSONResponse(status_code=200,
-                        content={"message": "Password reset successfully."})
+    return JSONResponse(
+        status_code=200,
+        content={"message": "Password reset successfully."}
+    )

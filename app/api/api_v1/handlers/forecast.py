@@ -15,11 +15,13 @@ from app.services.user_service import UserService
 forecast_router = APIRouter()
 
 
-@forecast_router.get('/get_cities/{postal_code}',
-                     summary='Get cities by postal code')
+@forecast_router.get(
+    '/get_cities/{postal_code}',
+    summary='Get cities by postal code'
+)
 async def retrieve_cities_by_postal_code(
-        postal_code: str,
-        current_user: User = Depends(get_current_user)
+    postal_code: str,
+    current_user: User = Depends(get_current_user)
 ):
     """
     Retrieve a list of cities based on the provided postal code and update the
@@ -37,10 +39,14 @@ async def retrieve_cities_by_postal_code(
     return await ForecastService.retrieve_cities(postal_code)
 
 
-@forecast_router.get('/get_forecast/{latitude}/{longitude}',
-                     summary='Get forecast weather by latitude and longitude')
-async def get_forecast(latitude: str, longitude: str,
-                       _: User = Depends(get_current_user)):
+@forecast_router.get(
+    '/get_forecast/{latitude}/{longitude}',
+    summary='Get forecast weather by latitude and longitude'
+)
+async def get_forecast(
+    latitude: str, longitude: str,
+    _: User = Depends(get_current_user)
+):
     """
     Get the forecast weather information based on the provided latitude and
         longitude.

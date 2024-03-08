@@ -12,11 +12,22 @@ class UserAuth(BaseModel):
     """
     UserAuth class for user authentication.
     """
-    email: EmailStr = Field(..., description="user email")
-    username: str = Field(..., min_length=5,
-                          max_length=50, description="user username")
-    password: str = Field(..., min_length=5,
-                          max_length=24, description="user password")
+    email: EmailStr = Field(
+        ...,
+        description="user email"
+    )
+    username: str = Field(
+        ...,
+        min_length=5,
+        max_length=50,
+        description="user username"
+    )
+    password: str = Field(
+        ...,
+        min_length=5,
+        max_length=24,
+        description="user password"
+    )
 
 
 class UserOut(BaseModel):
@@ -37,33 +48,41 @@ class UserOut(BaseModel):
 class UserUpdate(BaseModel):
     """
     """
-    first_name: Optional[str] = Field(None,
-                                      title='First Name',
-                                      max_length=25,
-                                      min_length=6)
-    last_name: Optional[str] = Field(None,
-                                     title='Last Name',
-                                     max_length=25,
-                                     min_length=6)
-    postal_code: Optional[str] = Field(None,
-                                       title='Postal Code',
-                                       ge=1,
-                                       gl=8)
+    first_name: Optional[str] = Field(
+        None,
+        title='First Name',
+        max_length=25,
+        min_length=6
+    )
+    last_name: Optional[str] = Field(
+        None,
+        title='Last Name',
+        max_length=25,
+        min_length=6
+    )
+    postal_code: Optional[str] = Field(
+        None,
+        title='Postal Code',
+        ge=1,
+        gl=8
+    )
 
 
 class UserResetPassword(BaseModel):
     """
     """
-    token: str = Field(...,
-                       min_length=15,
-                       max_length=35,
-                       title='token'
-                       ),
-    password: str = Field(...,
-                          min_length=5,
-                          max_length=50,
-                          title='user password'
-                          )
+    token: str = Field(
+        ...,
+        min_length=15,
+        max_length=35,
+        title='token'
+    ),
+    password: str = Field(
+        ...,
+        min_length=5,
+        max_length=50,
+        title='user password'
+    )
 
 
 class EmailSchema(BaseModel):

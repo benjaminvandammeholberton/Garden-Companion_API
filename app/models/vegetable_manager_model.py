@@ -56,7 +56,8 @@ class VegetableManager(Document):
 
     def __eq__(self, other: object) -> bool:
         """
-        Check if two VegetableManager objects are equal based on their vegetable_manager_id.
+        Check if two VegetableManager objects are equal based on their
+            vegetable_manager_id.
         """
         if isinstance(other, VegetableManager):
             return self.vegetable_manager_id == other.vegetable_manager_id

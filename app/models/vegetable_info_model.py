@@ -50,7 +50,8 @@ class VegetableInfo(Document):
 
     def __eq__(self, other: object) -> bool:
         """
-        Check if two VegetableInfo objects are equal based on their vegetable_info_id.
+        Check if two VegetableInfo objects are equal based on their
+            vegetable_info_id.
         """
         if isinstance(other, VegetableInfo):
             return self.vegetable_info_id == other.vegetable_info_id

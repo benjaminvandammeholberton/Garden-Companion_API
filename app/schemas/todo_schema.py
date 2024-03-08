@@ -20,8 +20,12 @@ class TodoUpdate(BaseModel):
     """
     TodoUpdate class for updating an existing todo.
     """
-    title: Optional[str] = Field(None, title='Title',
-                                 max_length=55, min_length=1)
+    title: Optional[str] = Field(
+        None,
+        title='Title',
+        max_length=55,
+        min_length=1
+    )
     status: Optional[bool] = False
 
 
