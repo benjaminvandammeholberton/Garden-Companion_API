@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.background {
+  background: linear-gradient(
+    to bottom,
+    #cdd16b,
+    #c1d673,
+    #b4db7c,
+    #a7df87,
+    #99e393,
+    #9ee18e,
+    #a2df88,
+    #a7dd83,
+    #bfd46f,
+    #d5c962,
+    #e9bd5c,
+    #fbb05f
+  );
+}
+
+@layer base {
+  html {
+    font-family: "Roboto", sans-serif;
+  }
+}
