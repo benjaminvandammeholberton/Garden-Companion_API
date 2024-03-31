@@ -6,7 +6,6 @@ from typing import List
 from uuid import UUID
 
 from app.core.dependencies import get_current_user
-from app.models.area_model import Area
 from app.schemas.vegetable_manager_schema import (
     VegetableManagerCreate,
     VegetableManagerOut,
