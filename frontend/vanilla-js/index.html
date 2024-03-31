@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./styles/assets/assets-landing/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./styles/style-landing.css" />
+    <title>Garden Companion</title>
+    <meta name="description"
+        content="Garden Companion - Votre allié pour un potager optimisé et productif. Gérez votre jardin potager avec notre tableau de bord complet, suivez le développement de chaque culture, optimisez la production, et profitez de fonctionnalités pratiques telles que la prévision météo, le guide de culture, et bien plus. Rejoignez la communauté Garden Companion dès maintenant. Happy Gardening! 🌱🌺">
+</head>
+<script>
+    if (window.location.hostname === 'www.gardencompanion.fr' || window.location.hostname === 'gardencompanion.fr' || window.location.hostname === 'www.gardencompanion.io') {
+        window.location.href = 'https://gardencompanion.io';
+    }
+</script>
+
+<body>
+    <header>
+        <div class="header__title">
+            <h1 id="home">Garden Companion</h1>
+            <p>Ensemble, cultivons l'abondance</p>
+            <ul class="header__menu">
+                <li> <a href="#features"><button class="button" role="button">Fonctionnalités</button></a></li>
+                <li> <a href="#about"><button class="button" role="button">À propos</button></a></li>
+            </ul>
+        </div>
+
+        <div class="header__content">
+            <img class="header__content__dashboard" src="./styles/assets/assets-landing/dashboard.png" alt="">
+            <div class="header__content__description">
+                <div class="header__content__description__vegetable-icons">
+                    <div
+                        class="header__content__description__vegetable-icon__icon header__content__description__vegetable-icon__icon--1">
+                    </div>
+                    <div
+                        class="header__content__description__vegetable-icon__icon header__content__description__vegetable-icon__icon--2">
+                    </div>
+                    <div
+                        class="header__content__description__vegetable-icon__icon header__content__description__vegetable-icon__icon--3">
+                    </div>
+                </div>
+                <p>
+                    Garden Companion est un tableau de bord complet qui donne aux amateurs de jardin potager, les
+                    outils et les informations nécessaires pour gérer leur espace de culture de manière
+                    efficace et efficiente.
+                </p>
+                <div class="header__content__description__buttons"><a href="./login.html"><button class="button"
+                            role="button">Se
+                            connecter</button></a>
+                    <a href="./login.html"><button class="button" role="button">Démarrer
+                            gratuitement</button></a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="features">Fonctionnalités</h2>
+        <div class="section plant-manager">
+            <div class="section__content plant-manager__content">
+                <h3>Gestionnaire de Plantes et d'Espaces de Culture</h3>
+                <div class="section__content__icon feature__icon--manager"></div>
+                <p>
+                    Organisez et gérez efficacement des zones distinctes dans votre jardin en créant des parcelles
+                    dédiées à différents types de plantes ou d'usages. Attribuez ensuite à chaque parcelle les
+                    légumes au fil de vos semis et plantations.
+                </p>
+                <p>
+                    Tenez à jour ces informations en suivant le développement de chaque culture, depuis le stade de
+                    semis jusqu'à la fin de culture et enregistrez les quantités récoltées.
+                </p>
+
+            </div>
+            <div class="section__screenshot">
+                <img src="./styles/assets/assets-landing/screenshot-manager-large.png" alt="" />
+                <img src="./styles/assets/assets-landing/screenshot-manager-3-large.png" alt="" />
+            </div>
+        </div>
+
+        <div class="section production">
+            <div class="section__content production__content">
+                <h3>Visualisation de la Production</h3>
+                <div class="section__content__icon feature__icon--production"></div>
+                <p>
+                    Optimisez la gestion de votre jardin en ayant une constante vue d'ensemble de chaque espace de
+                    culture de votre potager. Lorsque vous enregistrez la première récolte d'un légume, la timeline
+                    change de couleur, améliorant ainsi la visualisation.
+                </p>
+                <p>
+                    À mesure que plusieurs saisons s'écoulent, vous développerez une meilleure vision du temps
+                    nécessaire à chaque légume selon la période de l'année. Cela contribuera à accroître l'efficacité et
+                    les rendements de votre potager.
+                </p>
+            </div>
+            <img class="section__screenshot section__screenshot--production"
+                src="./styles/assets/assets-landing/production.png" alt="" />
+        </div>
+
+        <div class="section forecast">
+            <img class="section__screenshot forecast__image"
+                src="./styles/assets/assets-landing/screenshot-forecast.png" alt="" />
+            <div class="section__content forecast__content">
+                <h3>Prévisions Météo</h3>
+                <div class="section__content__icon feature__icon--forecast"></div>
+                <p class="forecast__text">
+                    Restez informé sur la météo grâce à des prévisions pour votre localisation. Planifiez vos
+                    activités de jardinage en toute confiance.
+                </p>
+            </div>
+        </div>
+
+        <div class="section production">
+            <div class="section__content production__content">
+                <h3>Guide de Culture</h3>
+                <div class="section__content__icon feature__icon--guide"></div>
+                <p>
+                    Explorez notre guide de culture, une source complète consacrée à une multitude de légumes. Il
+                    propose
+                    des descriptions ainsi que des informations essentielles, telles que les périodes de semis, les
+                    températures de germination, les besoins en eau, etc. L'ensemble est présenté de manière concise et
+                    facilement accessible pour une consultation rapide.
+                </p>
+            </div>
+            <img class="section__screenshot section__screenshot--production"
+                src="./styles/assets/assets-landing/guide.png" alt="" />
+        </div>
+
+        <div class="section container-3features">
+            <div class="section-3features">
+                <div class="section__content content-3features">
+                    <h3>To-Do List</h3>
+                    <div class="section__content__icon feature__icon--todo"></div>
+                    <p class="section-3features__text">
+                        Restez organisé avec une liste de tâches spécifique au jardin et suivez vos activités de
+                        jardinage.
+                    </p>
+                </div>
+            </div>
+            <div class="section-3features">
+                <div class="section__content content-3features">
+                    <h3>Assistant Spécialisé</h3>
+                    <div class="section__content__icon feature__icon--assistant"></div>
+                    <p class="section-3features__text">
+                        Interagissez avec un chatbot compétent conçu pour répondre à vos questions sur le
+                        jardinage, fournir des conseils et vous assister en temps réel.
+                    </p>
+                </div>
+            </div>
+            <div class="section-3features">
+                <div class="section__content content-3features">
+                    <h3>Semis du moment</h3>
+                    <div class="section__content__icon feature__icon--recommandations"></div>
+                    <p class="section-3features__text">
+                        Identifiez rapidement les semis recommandés en fonction de la date actuelle.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="community">
+            <h3>Rejoignez la communauté !</h3>
+            <a href="./login.html"><button class="button" role="button">Créez votre
+                    compte dès maintenant</button></a>
+        </div>
+        <div class="separation"></div>
+        <h2 id="about">À propos</h2>
+        <div class="about-section">
+            <p>
+                Se lancer dans le jardinage peut être intimidant pour les débutants, découragés par la multitude
+                d'informations à assimiler et de paramètres à prendre en compte. Même pour les jardiniers plus
+                expérimentés, rester organisé et optimiser la production peut devenir laborieux à mesure que le jardin
+                potager grandit.
+            </p>
+            <p>
+                <b>Garden Companion</b> est né de ma volonté de simplifier cette expérience, la rendre accessible au
+                plus grand nombre. Les fonctionnalités implémentées visent à résoudre ces deux problématiques : offrir
+                une assistance tant dans l'apprentissage que dans l'optimisation du jardin potager. Le tout, réuni dans
+                un espace agréable, intuitif et facile d'utilisation.
+            </p>
+            <p>
+                L'application en est à ses débuts, mon ambition est d'intégrer rapidement d'autres outils tels qu'un
+                planificateur de culture, un journal de bord ou encore un module pour l'arrosage automatique, dans le
+                but d'offrir une expérience complète et pratique.
+            </p>
+            <p>
+                Vos retours sont l'un des éléments essentiels dans l'évolution de <b>Garden Companion</b>. La démarche
+                est guidée par la passion partagée pour le jardinage et le désir constant de rendre cette expérience
+                agréable et enrichissante pour chacun.
+            </p>
+            <p>
+                <b>Happy Gardening 😉🥕</b>
+            </p>
+
+
+            <div class="member">
+                <p>Benjamin, créateur de l'application</p>
+                <div class="link-buttons">
+                    <a href="mailto:benjamin@gardencompanion.io"><button class="button" role="button">Email</button></a>
+                    <a href="https://www.linkedin.com/in/benjamin-vandamme-6084aa262/" target="_blank"
+                        rel="noopener noreferrer"><button class="button" role="button">LinkedIn</button></a>
+                </div>
+                <a href="./login.html"><button class="button" role="button">Démarrer gratuitement</button></a>
+            </div>
+        </div>
+        <a href="#home">
+            <div class="top-button">
+                <img src="./styles/assets/assets-landing/move-up.png" alt="">
+                <p>Retour en haut</p>
+            </div>
+        </a>
+    </main>
+
+    <footer>
+        <img class="icon-bottom icon-cock" src="./styles/assets/assets-landing/cock.png" alt="">
+        <img class="icon-bottom icon-chicken-3" src="./styles/assets/assets-landing/chicken-3.png" alt="">
+        <img class="icon-bottom icon-chicken" src="./styles/assets/assets-landing/chicken.png" alt="">
+        <img class="icon-bottom icon-tree" src="./styles/assets/assets-landing/tree.png" alt="">
+        <img class="icon-bottom icon-vegetation" src="./styles/assets/assets-landing/vegetation.png" alt="">
+        <img class="icon-bottom icon-vegetation2" src="./styles/assets/assets-landing/vegetation.png" alt="">
+        <img class="icon-bottom icon-vegetation3" src="./styles/assets/assets-landing/vegetation.png" alt="">
+        <p>&copy; 2024 Garden Companion - Tous droits réservés</p>
+    </footer>
+</body>
+<!-- simpleanalytics -->
+<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt=""
+        referrerpolicy="no-referrer-when-downgrade" /></noscript>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                // Determine the duration of the scroll animation (in milliseconds)
+                const animationDuration = 1000; // 1000ms = 1 second
+
+                // Get the starting position
+                const startingY = window.pageYOffset;
+
+                // Calculate the target position
+                const targetY = targetElement.getBoundingClientRect().top + window.pageYOffset;
+
+                // Calculate the distance and time interval for the scroll
+                const distance = targetY - startingY;
+                const startTime = performance.now();
+
+                // Define the animation function
+                function scrollStep(currentTime) {
+                    const elapsedTime = currentTime - startTime;
+                    if (elapsedTime < animationDuration) {
+                        window.scrollTo(0, startingY + distance * easeInOutCubic(elapsedTime / animationDuration));
+                        requestAnimationFrame(scrollStep);
+                    } else {
+                        window.scrollTo(0, targetY);
+                    }
+                }
+
+                // Start the animation
+                function easeInOutCubic(t) {
+                    return t < 0.5
+                        ? 4 * t * t * t
+                        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                }
+
+                requestAnimationFrame(scrollStep);
+            }
+        });
+    });
+</script>
+
+
+</html>

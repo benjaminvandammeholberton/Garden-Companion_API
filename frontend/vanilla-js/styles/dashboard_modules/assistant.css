@@ -1,0 +1,210 @@
+.dashbord__module--assistant {
+  grid-area: todolist;
+  grid-column: span 1;
+  grid-row: span 1;
+  border-radius: 5px 5px 100px 5px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: flex-start;
+  background-size: auto 10%;
+  overflow: visible;
+}
+@media screen and (max-width: 430px) {
+  .dashbord__module--assistant {
+    border-radius: 5px 5px 5px 5px;
+    grid-row: span 2;
+  }
+}
+.dashbord__module__content--assistant {
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  margin-top: 40px;
+  align-items: start;
+  overflow: visible;
+}
+.assistant__resize-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  background-image: url(../assets/enlarge.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  overflow: hidden;
+  z-index: 2;
+}
+@media screen and (max-width: 430px) {
+  .assistant__resize-button {
+   display: none;
+  }
+}
+.assistant__resize-button::after {
+  content: attr(data-label);
+  display: inline-block;
+  position: absolute;
+  top: 3px;
+  right: -127px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2px 4px;
+  border: 1.5px solid #1e81ce;
+  color: #1e81ce;
+  border-radius: 5px;
+  cursor: text;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+  font-size: 16px;
+}
+.assistant__resize-button:hover::after {
+  opacity: 1;
+}
+.assistant__resize-button:hover {
+  overflow: visible;
+}
+.dashbord__module__request-counter {
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  color: rgb(133, 133, 133);
+}
+
+.chat-output {
+  position: absolute;
+  width: 90%;
+  height: 100px;
+  overflow: scroll;
+  padding: 5px;
+  top: 45px;
+}
+@media screen and (max-width: 430px) {
+  .chat-output {
+   height: 300px;
+  }
+}
+.chat-output::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.assistant__placeholder-message {
+  width: 80%;
+  margin: 5px;
+  position: relative;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  font-family: Roboto;
+  background-color: #babcbe;
+  border-radius: 20px;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+  overflow: visible;
+}
+.assistant__input-container {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  padding: 10px;
+  gap: 15px;
+}
+#user-input {
+  display: flex;
+  width: 80%;
+  height: 30px;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 5px;
+  font-size: 13px;
+  font-weight: 300;
+  font-family: Roboto;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+#assistantSubmit {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  text-decoration: none;
+  background-image: url(../assets/icon-send-2.png);
+  width: 25px;
+  height: 25px;
+  background-size: cover;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+#assistantSubmit:hover {
+  transform: scale(1.2);
+}
+.user-message {
+  align-self: flex-end;
+  position: relative;
+  width: 75%; /* Limit the maximum width for messages */
+  margin: 15px;
+  margin-left: 23%;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  font-family: Roboto;
+  background-color: #77c4f8;
+  border-radius: 20px;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+  overflow: visible;
+}
+.assistant-message {
+  width: 80%; /* Limit the maximum width for messages */
+  margin: 5px;
+  position: relative;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  font-family: Roboto;
+  background-color: #babcbe;
+  border-radius: 20px;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+}
+@keyframes dots {
+  0% {
+    content: ' .';
+  }
+  20% {
+    content: ' ..';
+  }
+  40% {
+    content: ' ...';
+  }
+  60% {
+    content: ' .';
+  }
+  80% {
+    content: ' ..';
+  }
+  100% {
+    content: ' ...';
+  }
+}
+.typing-dots {
+  font-size: 20px;
+  font-weight: 300;
+  font-family: Roboto;
+}
+.typing-dots::before {
+  content: ' ...';
+  animation: dots 3s ease-in-out infinite;
+}
