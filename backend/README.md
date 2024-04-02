@@ -65,3 +65,11 @@ you should get the response
 ```
 {message : "server is running"}
 ```
+
+## Testing
+
+To run tests launch the command:
+
+```
+python -m pytest
+```
