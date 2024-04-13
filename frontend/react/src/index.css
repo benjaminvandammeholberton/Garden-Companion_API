@@ -22,8 +22,43 @@
   );
 }
 
+.main-background {
+  background: linear-gradient(
+    180deg,
+    rgba(123, 240, 234, 1) 0%,
+    rgba(193, 250, 129, 1) 67%,
+    rgba(245, 193, 132, 1) 100%
+  );
+}
+
 @layer base {
   html {
     font-family: "Roboto", sans-serif;
   }
+}
+
+@keyframes dots {
+  0% {
+    content: " .";
+  }
+  20% {
+    content: " ..";
+  }
+  40% {
+    content: " ...";
+  }
+  60% {
+    content: " .";
+  }
+  80% {
+    content: " ..";
+  }
+  100% {
+    content: " ...";
+  }
+}
+
+.typing-dots::before {
+  content: " ...";
+  animation: dots 3s ease-in-out infinite;
 }

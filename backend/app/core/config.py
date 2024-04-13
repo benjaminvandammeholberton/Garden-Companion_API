@@ -66,7 +66,8 @@ class Settings(BaseSettings):
     MAIL_PASSWORD: str = config("MAIL_PASSWORD", cast=str)
     MAIL_FROM: str = config("MAIL_FROM", cast=str)
     MAIL_SERVER: str = config("MAIL_SERVER", cast=str)
-    FRONT_END_URL: str = config("FRONT_END_URL", cast=str)
+    # FRONT_END_URL: str = config("FRONT_END_URL", cast=str)
+    FRONT_END_URL: str = "http://localhost:3000"
     BACK_END_URL: str = config("BACK_END_URL", cast=str)
 
     class Config:
