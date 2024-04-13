@@ -1,19 +1,22 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { useState } from "react";
 
-import Footer from "./components/footer/Footer";
-import Header from "./components/header/Header";
-import Navbar from "./components/navbar/Navbar";
+import ChatBotModal from "./modal/ChatBotModal";
 import Dashboard from "./pages/Dashboard";
+import Footer from "./components/footer/Footer";
 import Guide from "./pages/Guide";
+import Header from "./components/header/Header";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
+import Navbar from "./components/navbar/Navbar";
 import NotFound from "./pages/NotFound";
 import Production from "./pages/Production";
 import Register from "./pages/Register";
 import Seedlings from "./pages/Seedlings";
 import Settings from "./pages/Settings";
-import ChatBotModal from "./modal/ChatBotModal";
+
+import chatBotIcon from "./assets/header/chatbot.png";
+
 import "./index.css";
 
 const Layout = () => {
@@ -35,7 +38,7 @@ const Layout = () => {
         onClick={toggleChatBotModal}
         className="fixed bottom-5 right-5 top w-16 h-16 rounded-full bg-white cursor-pointer"
       >
-        <img className="w-16 h-16" src="./assets/header/chatbot.png" alt="" />
+        <img className="w-16 h-16" src={chatBotIcon} alt="" />
       </div>
       <ChatBotModal isOpen={isChatBotModalOpen} onClose={closeChatBotModal} />
     </div>

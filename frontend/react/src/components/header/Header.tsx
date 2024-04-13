@@ -1,5 +1,12 @@
 import { useState } from "react";
+
 import HeaderModal from "../../modal/HeaderModal";
+
+import burgerMenuIcon from "../../assets/header/burger-menu.png";
+import chatIcon from "../../assets/header/chat.png";
+import logoutIcon from "../../assets/header/logout.png";
+import notificationsIcon from "../../assets/header/notification.png";
+import userIcon from "../../assets/header/user.png";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -40,20 +47,16 @@ const Header = () => {
           </span>
         </div>
         <div className="flex items-center w-full justify-center gap-10 border-y py-1">
-          <img
-            className="w-8 h-10 xl:hidden"
-            src="./assets/navbar/burger-menu.png"
-            alt=""
-          />
+          <img className="w-8 h-10 xl:hidden" src={burgerMenuIcon} alt="" />
           <img
             className="w-8 h-8 cursor-pointer "
-            src="./assets/header/notification.png"
+            src={notificationsIcon}
             alt=""
           />
-          <img className="w-9 h-9" src="./assets/header/chat.png" alt="" />
-          <img className="w-9 h-9" src="./assets/header/user.png" alt="" />
+          <img className="w-9 h-9" src={chatIcon} alt="" />
+          <img className="w-9 h-9" src={userIcon} alt="" />
 
-          <img className="w-8 h-8" src="./assets/header/logout.png" alt="" />
+          <img className="w-8 h-8" src={logoutIcon} alt="" />
         </div>
       </div>
 
@@ -69,29 +72,25 @@ const Header = () => {
         <div className="flex gap-5 items-center">
           <img
             className="header-modal-button w-8 h-8 hidden lg:block cursor-pointer"
-            src="./assets/header/notification.png"
+            src={notificationsIcon}
             alt=""
             onClick={() => toggleModal("notifications")}
           />
           <img
             className="header-modal-button w-9 h-9 cursor-pointer"
-            src="./assets/header/chat.png"
+            src={chatIcon}
             alt=""
             onClick={() => toggleModal("chat")}
           />
           <img
             className="header-modal-button w-9 h-9 cursor-pointer"
-            src="./assets/header/user.png"
+            src={userIcon}
             alt=""
             onClick={() => toggleModal("settings")}
           />
 
-          <img
-            className="w-8 h-10 xl:hidden"
-            src="./assets/navbar/burger-menu.png"
-            alt=""
-          />
-          <img className="w-8 h-8" src="./assets/header/logout.png" alt="" />
+          <img className="w-8 h-10 xl:hidden" src={burgerMenuIcon} alt="" />
+          <img className="w-8 h-8" src={logoutIcon} alt="" />
         </div>
       </div>
       <HeaderModal

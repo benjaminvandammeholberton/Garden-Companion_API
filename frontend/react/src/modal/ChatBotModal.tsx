@@ -23,7 +23,7 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
 
   const placeholderMessage: ChatBotMessage = {
     id: uuidv4(),
-    text: "Bonjour",
+    text: "Bonjour, comment puis-je vous aider ?",
     dateTime: new Date(),
     sender: "bot",
   };

@@ -1,5 +1,12 @@
 import { useState } from "react";
+
 import PlantManagerModal from "../../modal/PlantManagerModal";
+
+import directSowingIcon from "../../assets/plant-manager/direct-sowing.png";
+import harvestIcon from "../../assets/plant-manager/harvest.png";
+import indirectSowingIcon from "../../assets/plant-manager/indirect-sowing.png";
+import plantingIcon from "../../assets/plant-manager/planting.png";
+import removeIcon from "../../assets/plant-manager/remove.png";
 
 interface QuickActionsProps {}
 
@@ -21,7 +28,7 @@ const QuickActions: React.FC<QuickActionsProps> = () => {
             <img
               onClick={() => openModal("direct-sowing")}
               className="w-11"
-              src="./assets/plant-manager/direct-sowing.png"
+              src={directSowingIcon}
               alt=""
             />
             <p className="text-sm text-gray-500">Semi en place</p>
@@ -30,7 +37,7 @@ const QuickActions: React.FC<QuickActionsProps> = () => {
             <img
               onClick={() => openModal("indirect-sowing")}
               className="w-11"
-              src="./assets/plant-manager/indirect-sowing.png"
+              src={indirectSowingIcon}
               alt=""
             />
             <p className="text-sm text-gray-500">Semi en pot</p>
@@ -39,7 +46,7 @@ const QuickActions: React.FC<QuickActionsProps> = () => {
             <img
               onClick={() => openModal("planting")}
               className="w-11"
-              src="./assets/plant-manager/planting.png"
+              src={plantingIcon}
               alt=""
             />
             <p className="text-sm text-gray-500">Planter</p>
@@ -50,7 +57,7 @@ const QuickActions: React.FC<QuickActionsProps> = () => {
             <img
               onClick={() => openModal("harvest")}
               className="w-11"
-              src="./assets/plant-manager/harvest.png"
+              src={harvestIcon}
               alt=""
             />
             <p className="text-sm text-gray-500">Récolter</p>
@@ -59,7 +66,7 @@ const QuickActions: React.FC<QuickActionsProps> = () => {
             <img
               onClick={() => openModal("remove")}
               className="w-11"
-              src="./assets/plant-manager/remove.png"
+              src={removeIcon}
               alt=""
             />
             <p className="text-sm text-gray-500">Fin de culture</p>
