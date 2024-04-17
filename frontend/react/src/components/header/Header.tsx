@@ -7,6 +7,7 @@ import chatIcon from "../../assets/header/chat.png";
 import logoutIcon from "../../assets/header/logout.png";
 import notificationsIcon from "../../assets/header/notification.png";
 import userIcon from "../../assets/header/user.png";
+import basketIcon from "../../assets/header/shopping-basket.png";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -35,28 +36,37 @@ const Header = () => {
     day: "numeric",
   };
   return (
-    <div className="w-full fixed z-50 bg-white border-b">
+    <div className="w-full fixed top-0 z-50 bg-white border-b">
       <div className="lg:hidden flex flex-col items-center w-full gap-2 lg:pb-2">
         <div className="flex gap-5 items-center"></div>
         <div className="text-center">
           <h1 className="text-2xl lg:text-3xl font-thin ">
             Garden Companion <span className="text-sm lg:text-xl ">Beta</span>
           </h1>
-          <span className="font-thin lg:text-lg">
+          <span className="font-thin lg:text-lg hidden md:block">
             {today.toLocaleDateString("fr-FR", options)}
           </span>
         </div>
+        <ul className="flex gap-10 xl:text-xl">
+          <li className="border-b border-black cursor-pointer">Companion</li>
+          <li className="cursor-pointer">Boutique</li>
+          <li className="cursor-pointer">Blog</li>
+          <li className="cursor-pointer">Forum</li>
+        </ul>
         <div className="flex items-center w-full justify-center gap-10 border-y py-1">
-          <img className="w-8 h-10 xl:hidden" src={burgerMenuIcon} alt="" />
+          <img className="w-8 h-10" src={burgerMenuIcon} alt="" />
           <img
             className="w-8 h-8 cursor-pointer "
             src={notificationsIcon}
             alt=""
           />
           <img className="w-9 h-9" src={chatIcon} alt="" />
+          <img
+            className="header-modal-button w-9 h-9 cursor-pointer"
+            src={basketIcon}
+            alt=""
+          />
           <img className="w-9 h-9" src={userIcon} alt="" />
-
-          <img className="w-8 h-8" src={logoutIcon} alt="" />
         </div>
       </div>
 
@@ -68,6 +78,14 @@ const Header = () => {
           <span className="font-thin lg:text-md">
             {today.toLocaleDateString("fr-FR", options)}
           </span>
+        </div>
+        <div>
+          <ul className="flex gap-10 xl:text-xl">
+            <li className="border-b border-black cursor-pointer">Companion</li>
+            <li className="cursor-pointer">Boutique</li>
+            <li className="cursor-pointer">Blog</li>
+            <li className="cursor-pointer">Forum</li>
+          </ul>
         </div>
         <div className="flex gap-5 items-center">
           <img
@@ -88,8 +106,13 @@ const Header = () => {
             alt=""
             onClick={() => toggleModal("settings")}
           />
+          <img
+            className="header-modal-button w-9 h-9 cursor-pointer"
+            src={basketIcon}
+            alt=""
+          />
 
-          <img className="w-8 h-10 xl:hidden" src={burgerMenuIcon} alt="" />
+          <img className="w-8 h-10 lg:hidden" src={burgerMenuIcon} alt="" />
           <img className="w-8 h-8" src={logoutIcon} alt="" />
         </div>
       </div>

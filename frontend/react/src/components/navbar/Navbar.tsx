@@ -1,20 +1,21 @@
 import Navlink from "./Navlink";
 
 import dashboardIcon from "../../assets/navbar/dashboard.png";
-import productionIcon from "../../assets/navbar/production.png";
-import seedlingsIcon from "../../assets/navbar/seedlings.png";
+import diaryIcon from "../../assets/navbar/diary.png";
 import guideIcon from "../../assets/navbar/guide.png";
-import settingsIcon from "../../assets/navbar/settings.png";
+import seeedsIcon from "../../assets/navbar/seeds.png";
+import toolsIcon from "../../assets/navbar/tools.png";
+import networkIcon from "../../assets/navbar/network.png";
 
 const Navbar = () => {
   return (
     <div
       className="
+      mt-[100px]
       fixed
-      left-10
       lg:left-0
       hidden
-      xl:flex
+      lg:flex
       flex-col
       gap-5
       justify-center
@@ -22,15 +23,15 @@ const Navbar = () => {
       bg-white
       border-2 rounded-e-3xl
       w-[90px]
-      h-[430px]
-      mt-56
+      py-4
       "
     >
       <Navlink path="/dashboard" imgUrl={dashboardIcon} />
-      <Navlink path="/production" imgUrl={productionIcon} />
-      <Navlink path="/seedlings" imgUrl={seedlingsIcon} />
+      <Navlink path="/production" imgUrl={diaryIcon} />
+      <Navlink path="/network" imgUrl={networkIcon} />
+      <Navlink path="/seeds" imgUrl={seeedsIcon} />
+      <Navlink path="/tools" imgUrl={toolsIcon} />
       <Navlink path="/guide" imgUrl={guideIcon} />
-      <Navlink path="/settings" imgUrl={settingsIcon} />
     </div>
   );
 };

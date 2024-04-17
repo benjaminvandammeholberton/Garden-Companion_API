@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import dashboardScreenshot from "../assets/landing/screenshots/dashboard.png";
 import forecastScreenshot from "../assets/landing/screenshots/forecast.png";
 import managerLeftScreenshot from "../assets/landing/screenshots/manager-left.png";
@@ -40,7 +42,7 @@ const Landing = () => {
                 className=" font-bold border-b-2 border-transparent hover:border-black text-zinc-900 md:whitespace-nowrap text-lg lg:text-xl"
                 role="button"
               >
-                Se connecter
+                <Link to="/login">Se connecter</Link>
               </button>
               <button
                 className=" font-bold border-b-2 border-transparent hover:border-black text-zinc-900 md:whitespace-nowrap text-lg lg:text-xl"

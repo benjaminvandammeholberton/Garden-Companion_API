@@ -62,3 +62,12 @@
   content: " ...";
   animation: dots 3s ease-in-out infinite;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lightblue;
+  border-radius: 100%;
+}

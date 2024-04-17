@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 import ChatBotModal from "./modal/ChatBotModal";
 import Dashboard from "./pages/Dashboard";
@@ -12,12 +12,29 @@ import Navbar from "./components/navbar/Navbar";
 import NotFound from "./pages/NotFound";
 import Production from "./pages/Production";
 import Register from "./pages/Register";
-import Seedlings from "./pages/Seedlings";
+import Seedlings from "./pages/dashboard-modules/Seedlings";
 import Settings from "./pages/Settings";
 
 import chatBotIcon from "./assets/header/chatbot.png";
 
 import "./index.css";
+import useAuth from "./hooks/useAuth";
+import Network from "./pages/Network";
+
+interface ProtectedRouteProps {
+  element: ReactNode;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
+  const [user, isLoading, isAuthenticated] = useAuth();
+  console.log(user);
+  console.log(isLoading);
+  console.log(isAuthenticated);
+  if (!user) {
+    return null;
+  }
+  return element;
+};
 
 const Layout = () => {
   const [isChatBotModalOpen, setisChatBotModalOpen] = useState<boolean>(false);
@@ -25,11 +42,11 @@ const Layout = () => {
   const toggleChatBotModal = () => setisChatBotModalOpen(!isChatBotModalOpen);
   const closeChatBotModal = () => setisChatBotModalOpen(false);
   return (
-    <div className="flex justify-center main-background gap-5 2xl:gap-10 md:min-h-screen">
+    <div className="flex justify-center main-background gap-5 2xl:gap-10 lg:min-h-screen">
       <Header />
       <Navbar />
-      <div className="flex flex-col items-center justify-center ml-20 mt-36 lg:mr-2 lg:mt-28 gap-10 md:min-h-screen w-full">
-        <div className="relative  md:h-full">
+      <div className="flex flex-col items-center justify-center md:mt-48 lg:ml-20 mt-36 lg:mr-2 lg:mt-28 gap-10 h-full w-full">
+        <div className="relative md:h-full w-full lg:w-auto flex justify-center">
           <Outlet />
         </div>
         <Footer />
@@ -69,19 +86,23 @@ function App() {
         },
         {
           path: "/seedlings",
-          element: <Seedlings />,
+          element: <ProtectedRoute element={<Seedlings />} />,
         },
         {
           path: "/production",
           element: <Production />,
         },
         {
+          path: "/network",
+          element: <ProtectedRoute element={<Network />} />,
+        },
+        {
           path: "/guide",
-          element: <Guide />,
+          element: <ProtectedRoute element={<Guide />} />,
         },
         {
           path: "settings",
-          element: <Settings />,
+          element: <ProtectedRoute element={<Settings />} />,
         },
       ],
     },

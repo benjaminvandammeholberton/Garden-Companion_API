@@ -3,7 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import sendIcon from "../assets/modal/send.png";
+
 import "../index.css";
+import useAuth from "../hooks/useAuth";
 
 interface ChatBotModalProps {
   isOpen: boolean;
@@ -18,15 +21,34 @@ interface ChatBotMessage {
 }
 
 const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
+  // const [user] = useAuth();
+  // console.log(user);
+
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const placeholderMessage: ChatBotMessage = {
     id: uuidv4(),
-    text: "Bonjour, comment puis-je vous aider ?",
+    text: ` Bonjour, comment puis-je vous aider ?`,
     dateTime: new Date(),
     sender: "bot",
   };
+
+  useEffect(() => {
+    // Prevent scrolling of body content when modal is open
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+      document.body.classList.add("md:overflow-auto");
+      document.body.classList.remove("overflow-auto");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    // Cleanup function to reset overflow style when component unmounts
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+      document.body.classList.remove("md:overflow-auto");
+    };
+  }, [isOpen]);
 
   const [inputValue, setInputValue] = useState<string>("");
   const [textareaRows, setTextareaRows] = useState<number>(1);
@@ -47,8 +69,6 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
     return message;
   };
 
-  console.log(messages);
-
   useEffect(() => {
     if (isOpen && modalContainerRef.current) {
       modalContainerRef.current.scrollTop =
@@ -62,6 +82,7 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
   };
 
   const sendChatBotRquest = () => {
+    if (inputValue === "") return;
     addMessage(inputValue, "user");
     setInputValue("");
     setTextareaRows(1);
@@ -70,8 +91,22 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
     setTimeout(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get("http://127.0.0.1:8000");
-          addMessage(response.data.message, "bot");
+          // const accessToken = localStorage.getItem("JWTGP");
+          // if (!accessToken) {
+          //   return null;
+          // }
+          // const response = await axios.post(
+          //   "http://127.0.0.1:8000/api/v1/assistant/",
+          //   { "user-input": inputValue },
+          //   {
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //       Authorization: `Bearer ${accessToken}`,
+          //     },
+          //   }
+          // );
+          // console.log(response.data);
+          addMessage("hello", "bot");
         } catch (err) {
           setError(err as Error);
           addMessage("Serveur HS", "bot");
@@ -108,17 +143,19 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
   return ReactDOM.createPortal(
     <div
       className="
-    fixed 
+    fixed
     bottom-0 
-    right-24 
-    w-[350px] 
-    h-[500px] 
+    right-0 md:right-24 
+    w-full md:w-[350px] 
+    h-full md:h-[500px] 
     flex 
+    z-50
     flex-col 
     items-center 
     bg-white 
-    rounded-t-3xl 
+    md:rounded-t-3xl 
     border
+    overflow-hidden
     "
     >
       <div
@@ -137,13 +174,13 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
           className="w-full h-full flex items-center justify-center cursor-pointer"
           onClick={onClose}
         >
-          <span className=" text-2xl">&times;</span>
+          <span className="text-4xl md:text-2xl">&times;</span>
         </div>
       </div>
 
       <h1 className="mt-3 text-2xl font-thin">Chatbot</h1>
       <div
-        className="w-full h-[390px] overflow-y-scroll pb-1"
+        className="w-full h-full md:h-[390px] overflow-y-scroll pb-20 md:pb-1"
         ref={modalContainerRef}
       >
         <div className="flex flex-col gap-3 justify-end min-h-full">
@@ -152,7 +189,8 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
               return (
                 <p
                   className="
-                  break-all 
+                  break-words
+                  
                   ml-auto 
                   mr-3 
                   border 
@@ -173,7 +211,8 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
               return (
                 <p
                   className="
-                  break-all
+                  
+                  break-words
                   ml-4
                   border
                   w-fit
@@ -196,7 +235,8 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
             <p
               className="
             typing-dots
-            break-all
+            
+            
             w-12
             ml-3
             border
@@ -237,7 +277,7 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
             <img
               className="w-8 h-8 cursor-pointer"
               onClick={sendChatBotRquest}
-              src="./assets/modal/send.png"
+              src={sendIcon}
               alt=""
             />
           </div>
