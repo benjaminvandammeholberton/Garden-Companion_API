@@ -70,7 +70,7 @@ class Settings(BaseSettings):
     FRONT_END_URL: str = "http://localhost:3000"
     BACK_END_URL: str = config("BACK_END_URL", cast=str)
 
-    class Config:
+    class ConfigDict:
         """
         Configuration class for Pydantic settings.
 

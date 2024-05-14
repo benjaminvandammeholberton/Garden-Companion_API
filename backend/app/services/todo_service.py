@@ -19,7 +19,7 @@ class TodoService:
         :param user: The user for whom to retrieve todos.
         :return: List of todos.
         """
-        todos = await Todo.find(Todo.owner.id == user.id).to_list()
+        todos = await Todo.find(Todo.owner == user.user_id).to_list()
         return todos
 
     @staticmethod
@@ -31,7 +31,7 @@ class TodoService:
         :param data: Todo creation data.
         :return: Created todo.
         """
-        todo = Todo(**data.dict(), owner=user)
+        todo = Todo(**data.dict(), owner=user.user_id)
         return await todo.insert()
 
     @staticmethod
@@ -44,7 +44,7 @@ class TodoService:
         :return: Retrieved todo.
         """
         todo = await Todo.find_one(Todo.todo_id == todo_id,
-                                   Todo.owner.id == current_user.id)
+                                   Todo.owner == current_user.user_id)
         return todo
 
     @staticmethod

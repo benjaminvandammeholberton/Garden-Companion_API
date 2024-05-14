@@ -19,6 +19,12 @@ class AreaCreate(BaseModel):
     name: str = Field(..., title='Name', max_length=25, min_length=1)
     surface: float = Field(..., title='Surface')
     sowing_area: bool = Field(..., title='Sowing Area')
+    environnement: str = Field(
+        ...,
+        title='Environnement',
+        max_length=25,
+        min_length=1
+    )
 
 
 class AreaUpdate(BaseModel):
@@ -37,6 +43,12 @@ class AreaUpdate(BaseModel):
     )
     surface: Optional[float] = Field(None, title='Surface')
     sowing_area: Optional[bool] = Field(None, title='Sowing Area')
+    environnement: Optional[str] = Field(
+        None,
+        title='Environnement',
+        max_length=25,
+        min_length=1
+    )
 
 
 class AreaOut(BaseModel):
@@ -53,3 +65,4 @@ class AreaOut(BaseModel):
     sowing_area: bool
     created_at: datetime
     updated_at: datetime
+    environnement: Optional[str]

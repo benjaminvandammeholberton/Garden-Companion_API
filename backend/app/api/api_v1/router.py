@@ -18,16 +18,14 @@ from app.api.api_v1.handlers import (
     vegetable_info,
     vegetable_manager,
     chat_bot,
-    forecast
+    forecast,
 )
 from app.api.auth.email_verification import email_verification_router
 from app.api.auth.forget_password import password_reset
 from app.api.auth.login import auth_router
 
-# Main APIRouter instance
 router = APIRouter()
 
-# Include user-related, todo-related, and authentication routers
 router.include_router(
     area.area_router,
     prefix='/area',

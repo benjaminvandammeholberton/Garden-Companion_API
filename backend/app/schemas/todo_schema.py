@@ -14,6 +14,7 @@ class TodoCreate(BaseModel):
     """
     title: str = Field(..., title='Title', max_length=55, min_length=1)
     status: Optional[bool] = False
+    priority: bool
 
 
 class TodoUpdate(BaseModel):
@@ -26,7 +27,8 @@ class TodoUpdate(BaseModel):
         max_length=55,
         min_length=1
     )
-    status: Optional[bool] = False
+    status: Optional[bool] = None
+    priority: Optional[bool] = None
 
 
 class TodoOut(BaseModel):
@@ -38,3 +40,4 @@ class TodoOut(BaseModel):
     title: str
     created_at: datetime
     updated_at: datetime
+    priority: bool

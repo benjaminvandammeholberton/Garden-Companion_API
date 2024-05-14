@@ -16,7 +16,7 @@ class AreaService:
         Retrieve a list of areas for a given user
         """
         areas = await Area.find(
-            Area.owner.id == user.id
+            Area.owner == user.user_id
         ).to_list()
         return areas
 
@@ -25,7 +25,7 @@ class AreaService:
         """
         Create a new area for the given user
         """
-        area = Area(**data.model_dump(), owner=user)
+        area = Area(**data.model_dump(), owner=user.user_id)
         return await area.insert()
 
     @staticmethod

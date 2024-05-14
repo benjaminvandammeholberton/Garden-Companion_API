@@ -2,24 +2,28 @@
 Area model representing a document in a database.
 """
 
-from beanie import Document, Indexed, Link, before_event, Replace, Insert
+
+from beanie import Document, before_event, Replace, Insert
 from datetime import datetime
 from pydantic import Field
+from typing import List, Optional
 from uuid import UUID, uuid4
 
-from app.models.user_model import User
+from app.models.vegetable_manager_model import VegetableManager
 
 
 class Area(Document):
     """
     """
     area_id: UUID = Field(default_factory=uuid4, unique=True)
-    name: Indexed(str)
+    name: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     surface: float
     sowing_area: bool
-    owner: Link[User]
+    owner: UUID
+    environnement: Optional[str] = None
+    vegetables: List[VegetableManager] = []
 
     def __repr__(self) -> str:
         """
