@@ -15,12 +15,12 @@ def test_default_values():
     assert settings.JWT_REFRESH_SECRET_KEY == config(
         "JWT_REFRESH_SECRET_KEY",
         cast=str
-        )
+    )
     assert settings.JWT_SECRET_KEY == config("JWT_SECRET_KEY", cast=str)
     assert settings.MONGO_CONNECTION_STRING == config(
         "MONGO_CONNECTION_STRING",
         cast=str
-        )
+    )
     assert settings.MAIL_USERNAME == config("MAIL_USERNAME", cast=str)
     assert settings.MAIL_PASSWORD == config("MAIL_PASSWORD", cast=str)
     assert settings.MAIL_FROM == config("MAIL_FROM", cast=str)
