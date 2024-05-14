@@ -13,6 +13,10 @@ const Navbar = () => {
       className="
       mt-[100px]
       fixed
+      right-0
+      top-1/2
+      transform
+      -translate-y-1/2
       lg:left-0
       hidden
       lg:flex
@@ -26,12 +30,12 @@ const Navbar = () => {
       py-4
       "
     >
-      <Navlink path="/dashboard" imgUrl={dashboardIcon} />
-      <Navlink path="/production" imgUrl={diaryIcon} />
+      <Navlink path="me/dashboard" imgUrl={dashboardIcon} />
+      <Navlink path="me/myspace" imgUrl={diaryIcon} />
       <Navlink path="/network" imgUrl={networkIcon} />
-      <Navlink path="/seeds" imgUrl={seeedsIcon} />
-      <Navlink path="/tools" imgUrl={toolsIcon} />
-      <Navlink path="/guide" imgUrl={guideIcon} />
+      <Navlink path="me/seeds" imgUrl={seeedsIcon} />
+      <Navlink path="me/tools" imgUrl={toolsIcon} />
+      <Navlink path="me/guide" imgUrl={guideIcon} />
     </div>
   );
 };

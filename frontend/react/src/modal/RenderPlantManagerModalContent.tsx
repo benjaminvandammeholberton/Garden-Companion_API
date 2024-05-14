@@ -1,8 +1,8 @@
-import DirectSowingForm from "../components/dashboard-modules/plant-manager/DirectSowingForm";
-import HarvestForm from "../components/dashboard-modules/plant-manager/HarvestForm";
-import IndirectSowingForm from "../components/dashboard-modules/plant-manager/IndirectSowingForm";
-import PlantingForm from "../components/dashboard-modules/plant-manager/PlantingForm";
-import RemoveForm from "../components/dashboard-modules/plant-manager/RemoveForm";
+import DirectSowingForm from "../features/dashboard-modules/actions/DirectSowingForm";
+import HarvestForm from "../features/dashboard-modules/actions/HarvestForm";
+import IndirectSowingForm from "../features/dashboard-modules/actions/IndirectSowingForm";
+import PlantingForm from "../features/dashboard-modules/actions/PlantingForm";
+import RemoveForm from "../features/dashboard-modules/actions/RemoveForm";
 
 interface RenderPlantManagerModalContentProps {
   content: string | null;

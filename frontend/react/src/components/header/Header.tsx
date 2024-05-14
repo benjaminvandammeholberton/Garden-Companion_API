@@ -8,8 +8,10 @@ import logoutIcon from "../../assets/header/logout.png";
 import notificationsIcon from "../../assets/header/notification.png";
 import userIcon from "../../assets/header/user.png";
 import basketIcon from "../../assets/header/shopping-basket.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string | null>(null);
 
@@ -34,6 +36,11 @@ const Header = () => {
     year: "numeric",
     month: "long",
     day: "numeric",
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("JWTGP");
+    navigate("/");
   };
   return (
     <div className="w-full fixed top-0 z-50 bg-white border-b">
@@ -113,7 +120,12 @@ const Header = () => {
           />
 
           <img className="w-8 h-10 lg:hidden" src={burgerMenuIcon} alt="" />
-          <img className="w-8 h-8" src={logoutIcon} alt="" />
+          <img
+            className="w-8 h-8 cursor-pointer"
+            src={logoutIcon}
+            alt=""
+            onClick={handleLogout}
+          />
         </div>
       </div>
       <HeaderModal

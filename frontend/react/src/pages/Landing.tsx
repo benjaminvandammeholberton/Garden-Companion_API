@@ -18,8 +18,13 @@ import productionIcon from "../assets/landing/icons/production.png";
 import sowingIcon from "../assets/landing/icons/sowing.png";
 import toDoIcon from "../assets/landing/icons/todo.png";
 import tomatoIcon from "../assets/landing/icons/tomato.png";
+import useAuth from "../hooks/useAuth";
 
 const Landing = () => {
+  const [user, isLoading] = useAuth();
+  console.log(user);
+  if (isLoading) return <div>Chargement</div>;
+
   return (
     <div className="background text-zinc-900 p-5 md:pt-14 mx-auto">
       <div className="container mx-auto flex flex-col gap-32">
@@ -48,19 +53,7 @@ const Landing = () => {
                 className=" font-bold border-b-2 border-transparent hover:border-black text-zinc-900 md:whitespace-nowrap text-lg lg:text-xl"
                 role="button"
               >
-                Démarrer gratuitement
-              </button>
-              <button
-                className="font-bold hidden md:block border-b-2 border-transparent hover:border-black text-zinc-900 md:whitespace-nowrap text-lg lg:text-xl"
-                role="button"
-              >
-                Fonctionnalités
-              </button>
-              <button
-                className="font-bold hidden md:block border-b-2 border-transparent hover:border-black text-zinc-900 md:whitespace-nowrap text-lg lg:text-xl"
-                role="button"
-              >
-                À propos
+                <Link to="/register">Démarrer gratuitement</Link>
               </button>
             </div>
           </div>

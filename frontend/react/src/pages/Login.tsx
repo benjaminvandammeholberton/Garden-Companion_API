@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import { updateTokenInAxiosHeaders } from "../api/axios";
 
 interface LoginForm {
   email: string;
@@ -26,7 +27,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/v1/auth/login",
+        "http://192.168.1.191:8001/api/v1/auth/login",
         `grant_type=&username=${encodeURIComponent(
           loginForm.email
         )}&password=${encodeURIComponent(loginForm.password)}`,
@@ -37,15 +38,16 @@ const Login = () => {
           },
         }
       );
-      setIsLoading(false);
       const token = response.data.access_token;
       if (response.status === 200 && token) {
         localStorage.setItem("JWTGP", token);
-        navigate("/dashboard");
+        updateTokenInAxiosHeaders(token);
+        navigate("/me/dashboard");
       }
     } catch (err) {
-      setIsLoading(false);
       console.error("Login failed", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 

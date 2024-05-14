@@ -1,7 +1,22 @@
 import axios from "axios";
 
-const axioInstance = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+const getToken = () => {
+  return localStorage.getItem("JWTGP");
+};
+
+const axiosInstance = axios.create({
+  baseURL: "http://192.168.1.191:8001",
+  headers: {
+    common: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  },
 });
 
-export default axioInstance;
+export const updateTokenInAxiosHeaders = (token: string) => {
+  axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
+
+export default axiosInstance;

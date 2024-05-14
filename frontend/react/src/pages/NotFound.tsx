@@ -11,8 +11,8 @@ const NotFound = () => {
         <img src={number4} alt="" />
       </div>
       <p className="text-4xl">Page introuvable</p>
-      <button className="font-thin px-10 py-5 text-2xl bg-black rounded-full text-white">
-        Retour au tableau de bord
+      <button className="font-thin px-10 py-5 text-xl bg-black rounded-full text-white">
+        Retour
       </button>
     </div>
   );
