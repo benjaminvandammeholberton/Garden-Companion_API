@@ -3,102 +3,85 @@ Vegetable-manager-related Pydantic models for input, update, and output.
 """
 
 from datetime import date
-from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, Field, conint, confloat
+from pydantic import BaseModel, Field
 
-from app.schemas.area_schema import AreaOut
+
+class HarvestType(BaseModel):
+    """
+    """
+    date: date
+    quantity: float | None = Field(None, ge=0, le=10000)
+    unit: str | None = Field(None, min_length=1, max_length=20)
+    note: str | None = Field(None, min_length=1, max_length=500)
+
+
+class WaterType(BaseModel):
+    """
+    """
+    date: date
+    quantity: float | None = Field(None, ge=0, le=10000)
+    unit: str | None = Field(None, min_length=1, max_length=20)
+    note: str | None = Field(None, min_length=1, max_length=500)
+
+
+class FertilizeType(BaseModel):
+    """
+    """
+    name: str = Field(None, min_length=1, max_length=30)
+    date: date
+    quantity: float | None = Field(None, ge=0, le=10000)
+    unit: str | None = Field(None, min_length=1, max_length=20)
+    note: str | None = Field(None, min_length=1, max_length=500)
+
+
+class NoteType(BaseModel):
+    """
+    """
+    title: str = Field(None, min_length=1, max_length=30)
+    date: date
+    note: str | None = Field(None, min_length=1, max_length=500)
+
+
+class PruneType(BaseModel):
+    """
+    """
+    date: date
+    note: str | None = Field(None, min_length=1, max_length=500)
 
 
 class VegetableManagerCreate(BaseModel):
     """
     Pydantic model for creating VegetableManager.
-
-    Attributes:
-    - name (str): The name of the vegetable.
     """
-    name: str = Field(..., title='Name', max_length=25, min_length=1)
-    variety: Optional[str] = Field(
-        None,
-        title='Variety',
-        max_length=25,
-        min_length=1
-    )
-    quantity: conint(ge=1, le=1000) = Field(..., title='Quantity')
-    sowed: bool = Field(..., title='Sowed')
-    planted: bool = Field(..., title='Planted')
-    sowing_date: Optional[date] = Field(None, title='Sowing date')
-    planting_date: Optional[date] = Field(None, title='Planting date')
-    harvest_date: Optional[date] = Field(None, title='Harvest date')
-    harvest_quantity: Optional[confloat(ge=0, le=1000)] = Field(
-        None,
-        title='Harvest quantity'
-    )
-    harvest_unit: Optional[str] = Field(
-        None,
-        title='Harvest unit',
-        max_length=10,
-        min_length=1
-    )
-    remove_date: Optional[date] = Field(None, title='Remove date')
-    notes: Optional[str] = Field(
-        None,
-        title='Notes',
-        max_length=755,
-        min_length=1
-    )
-    area: Optional[str] = Field(
-        None,
-        title='Area',
-        max_length=50,
-        min_length=1
-    )
+    name: str = Field(max_length=25, min_length=1)
+    variety: str | None = Field(max_length=25, min_length=1)
+    quantity: int | None = Field(None, ge=0, le=1000)
+    quantity_unit: str | None = None
+    sowing_date: date | None = None
+    planting_date: date | None = None
+    note: list[NoteType] | None = None
+    area: str | None = Field(max_length=50, min_length=1)
 
 
 class VegetableManagerUpdate(BaseModel):
     """
     Pydantic model for updating VegetableManager.
-
-    Attributes:
-    - name (Optional[str]): The updated name of the vegetable.
     """
-    name: Optional[str] = Field(
-        None, title='Name', max_length=25, min_length=1)
-    variety: Optional[str] = Field(
-        None,
-        title='Variety',
-        max_length=25,
-        min_length=1
-    )
-    quantity: Optional[conint(ge=1, le=1000)] = Field(None, title='Quantity')
-    sowed: Optional[bool] = Field(None, title='Sowed')
-    planted: Optional[bool] = Field(None, title='Planted')
-    sowing_date: Optional[date] = Field(None, title='Sowing date')
-    planting_date: Optional[date] = Field(None, title='Planting date')
-    harvest_date: Optional[date] = Field(None, title='Harvest date')
-    harvest_quantity: Optional[confloat(ge=0, le=1000)] = Field(
-        None,
-        title='Harvest quantity'
-    )
-    harvest_unit: Optional[str] = Field(
-        None,
-        title='Harvest unit',
-        max_length=10,
-        min_length=1
-    )
-    remove_date: Optional[date] = Field(None, title='Remove date')
-    notes: Optional[str] = Field(
-        None,
-        title='Notes',
-        max_length=755,
-        min_length=1
-    )
-    area: Optional[str] = Field(
-        None,
-        title='Area',
-        max_length=50,
-        min_length=1
-    )
+    name: str | None = Field(None, max_length=25, min_length=1)
+    variety: str | None = Field(None, max_length=25, min_length=1)
+    quantity: int | None = Field(None, gt=0, le=1000)
+    quantity_unit: str | None = None
+    sowing_date: date | None = None
+    planting_date: date | None = None
+    ready_to_harvest: date | None = None
+    harvest: HarvestType | None = None
+    fertilize: FertilizeType | None = None
+    prune: PruneType | None = None
+    water: WaterType | None = None
+    remove_date: date | None = None
+    note: NoteType | None = None
+    area: str | None = Field(None, max_length=50, min_length=1)
 
 
 class VegetableManagerOut(BaseModel):
@@ -111,15 +94,16 @@ class VegetableManagerOut(BaseModel):
     """
     vegetable_manager_id: UUID
     name: str
-    variety: Optional[str]
-    quantity: int
-    sowed: bool
-    planted: bool
-    sowing_date: Optional[date]
-    planting_date: Optional[date]
-    harvest_date: Optional[date]
-    harvest_quantity: Optional[float]
-    harvest_unit: Optional[str]
-    remove_date: Optional[date]
-    notes: Optional[str]
-    area: AreaOut
+    variety: str | None
+    quantity: int | None
+    quantity_unit: str | None
+    sowing_date: date | None
+    planting_date: date | None
+    ready_to_harvest: date | None
+    harvest: list[HarvestType] | None
+    fertilize: list[FertilizeType] | None
+    water: list[WaterType] | None
+    prune: list[PruneType] | None
+    remove_date: date | None
+    note: list[NoteType] | None
+    area: UUID | None

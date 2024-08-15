@@ -1,12 +1,18 @@
 """
 """
-from fastapi import APIRouter, Depends, HTTPException
-from typing import List
+from fastapi import APIRouter, Depends, HTTPException, Path
+from typing import List, Annotated
 from uuid import UUID
 
 from app.core.dependencies import get_current_user
 from app.models.user_model import User
-from app.schemas.area_schema import AreaOut, AreaCreate, AreaUpdate
+from app.schemas.area_schema import (
+    AreaOut,
+    AreaCreate,
+    AreaUpdate,
+    AreaOutWithVegetablesData,
+    AreaOutWithoutVegetablesData
+)
 from app.services.area_service import AreaService
 from app.services.user_service import UserService
 
@@ -16,7 +22,7 @@ area_router = APIRouter()
 @area_router.get(
     '/',
     summary='Get all areas of the user',
-    response_model=List[AreaOut]
+    response_model=List[AreaOutWithVegetablesData]
 )
 async def list(current_user: User = Depends(get_current_user)):
     """
@@ -31,13 +37,19 @@ async def list(current_user: User = Depends(get_current_user)):
 @area_router.get(
     '/all/{username}',
     summary='Get all areas from a specific user',
-    response_model=List[AreaOut]
+    response_model=List[AreaOutWithVegetablesData]
 )
-async def get_vegetables_from_user(username: str, _=Depends(get_current_user)):
+async def get_vegetables_from_user(
+    username: Annotated[str, Path(
+        title='df',
+        description='The username of the user to get areas'
+    )],
+    _=Depends(get_current_user)
+):
     """
     Endpoint to retrieve all areas from a specific user.
 
-    :param username: the username of the user we want to get areas
+    :param username: the username of the areas's user we want to get
     :return: List of areas
     """
     user = await UserService.get_user_by_username(username)
@@ -67,10 +79,15 @@ async def create_area(
 @area_router.get(
     '/{area_id}',
     summary='Get a area by area_id',
-    response_model=AreaOut
+    response_model=AreaOutWithVegetablesData
 )
-async def retrieve(area_id: UUID,
-                   current_user: User = Depends(get_current_user)):
+async def retrieve(
+    area_id: Annotated[
+        UUID,
+        Path(description='The ID of the area to get')
+    ],
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint to retrieve a area by its ID.
 
@@ -81,13 +98,13 @@ async def retrieve(area_id: UUID,
     return await AreaService.retrieve_area(current_user, area_id)
 
 
-@area_router.put(
+@area_router.patch(
     '/{area_id}',
     summary="Update area by area_id",
-    response_model=AreaOut
+    response_model=AreaOutWithoutVegetablesData
 )
 async def update(
-    area_id: UUID,
+    area_id: Annotated[UUID, Path(description="The ID of the area to update")],
     data: AreaUpdate,
     current_user: User = Depends(get_current_user)
 ):
@@ -102,17 +119,14 @@ async def update(
     return await AreaService.update_area(current_user, area_id, data)
 
 
-@area_router.delete('/{area_id}', summary="Delete area by area_id")
+@area_router.delete(
+    '/{area_id}',
+    summary="Delete area by area_id",
+    response_model=None
+)
 async def delete(
-    area_id: UUID,
+    area_id: Annotated[UUID, Path(description="The ID of the area to delete")],
     current_user: User = Depends(get_current_user)
 ):
-    """
-    Endpoint to delete a area by its ID.
-
-    :param area_id: ID of the area to delete.
-    :param current_user: The authenticated user.
-    :return: None.
-    """
     await AreaService.delete_area(current_user, area_id)
     return None

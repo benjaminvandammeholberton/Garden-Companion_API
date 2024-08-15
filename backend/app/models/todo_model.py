@@ -2,10 +2,11 @@
 Todo model representing a document in a database.
 """
 
-from beanie import Document, before_event, Replace, Insert
+from beanie import Document, Save, before_event
 from datetime import datetime
-from pydantic import Field
 from uuid import UUID, uuid4
+
+from pydantic import Field
 
 
 class Todo(Document):
@@ -31,11 +32,11 @@ class Todo(Document):
     Settings:
     - name (str): The name of the collection in the database.
     """
-    todo_id: UUID = Field(default_factory=uuid4, unique=True)
+    todo_id: UUID = Field(default_factory=uuid4)
     status: bool = False
     title: str
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
     owner: UUID
     priority: bool
 
@@ -65,7 +66,7 @@ class Todo(Document):
             return self.todo_id == other.todo_id
         return False
 
-    @before_event([Replace, Insert])
+    @before_event([Save])
     def update_update_at(self):
         """
         Update the `updated_at` timestamp before Replace or Insert events.

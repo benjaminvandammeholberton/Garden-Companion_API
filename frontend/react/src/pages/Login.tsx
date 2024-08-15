@@ -27,7 +27,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://192.168.1.191:8001/api/v1/auth/login",
+        "http://192.168.1.192:8001/api/v1/auth/login",
         `grant_type=&username=${encodeURIComponent(
           loginForm.email
         )}&password=${encodeURIComponent(loginForm.password)}`,

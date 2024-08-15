@@ -16,12 +16,11 @@ class ChatBotService:
     GPT-3.5-turbo model.
     """
     @staticmethod
-    async def send_answer(data: UserChatBotDailyRequest) -> ChatBotRequest:
+    async def send_answer(data: ChatBotRequest) -> str | None:
         """
         Sends a user input to the ChatBot model and retrieves the generated
         answer.
         """
-        print(data)
         preprompt = ("You are a french assistant about vegetable gardens. "
                      "If the user asks a question unrelated to gardening, "
                      "letting them know that your expertise is in vegetable "

@@ -4,6 +4,7 @@ import { greenhouse, outdoor, indoor } from "../../../../assets/assets-path";
 // hooks
 import { useState } from "react";
 import useAddArea from "../../../../hooks/useAddArea";
+import capitalize from "../../../../utils/capitalizeStr";
 
 interface AreaFormAddProps {
   handleClickAdd: () => void;
@@ -34,7 +35,7 @@ const AreaFormAdd: React.FC<AreaFormAddProps> = ({ handleClickAdd }) => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newArea = {
-      name: formData.name,
+      name: capitalize(formData.name),
       surface: formData.surface,
       environnement: formData.environnement,
       sowing_area: false,

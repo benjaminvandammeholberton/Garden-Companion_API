@@ -7,8 +7,11 @@ This module defines a service class, ForecastService, that uses asynchronous
 about cities based on postal codes from GeoNames API and weather forecasts
     based on latitude and longitude from OpenWeatherMap API.
 """
+from datetime import datetime
 from fastapi import HTTPException
 import httpx
+
+from app.schemas.forecast_schema import DailyForecastType, TempType
 
 
 class ForecastService:
@@ -58,7 +61,9 @@ class ForecastService:
             )
 
     @staticmethod
-    async def get_forecast(latitude: str, longitude: str) -> dict:
+    async def get_forecast(
+        latitude: float, longitude: float
+    ) -> list[DailyForecastType]:
         """
         Retrieve weather forecast based on the provided latitude and longitude.
 
@@ -74,8 +79,8 @@ class ForecastService:
         openweathermap_api_key = '9490af8425181b4e268e0b8e436d5caa'
         api_url = (
             "https://api.openweathermap.org/data/3.0/onecall?"
-            f"lat={latitude}&lon={longitude}&exclude=hourly,"
-            f"minutely,alerts&appid={openweathermap_api_key}"
+            f"lat={latitude}&lon={longitude}&exclude=current,hourly,"
+            f"minutely,alerts&appid={openweathermap_api_key}&units=metric"
         )
 
         try:
@@ -83,7 +88,9 @@ class ForecastService:
                 response = await client.get(api_url)
 
             if response.status_code == 200:
-                return response.json()
+                filtered_data = ForecastService.filter_forecast_data(
+                    response.json())
+                return filtered_data
 
             else:
                 raise HTTPException(
@@ -94,3 +101,24 @@ class ForecastService:
             raise HTTPException(
                 status_code=500,
                 detail=f"Error during OpenWeatherMap API request: {str(e)}")
+
+    @staticmethod
+    def filter_forecast_data(forecast_data: dict) -> list[DailyForecastType]:
+        """
+        Filter the data of the response API to extract data used in the app
+        """
+        filter_forecast = forecast_data['daily'][:7]
+
+        def process_data(day: dict) -> DailyForecastType:
+            return DailyForecastType(
+                date=datetime.fromtimestamp(day['dt']),
+                temp=TempType(
+                    min=int(day['temp']['min']),
+                    max=int(day['temp']['max'])
+                ),
+                wind=int(day.get('wind_speed', 0)),
+                rain=int(day.get('rain', 0)),
+                weather_icon=day['weather'][0]['icon']
+            )
+
+        return [process_data(day) for day in filter_forecast]

@@ -14,7 +14,7 @@ const RenderPlantManagerModalContent: React.FC<
 > = ({ content, onClose }) => {
   switch (content) {
     case "direct-sowing":
-      return <DirectSowingForm />;
+      return <DirectSowingForm onClose={onClose} />;
     case "indirect-sowing":
       return <IndirectSowingForm />;
     case "planting":

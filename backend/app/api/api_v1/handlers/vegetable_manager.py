@@ -100,12 +100,13 @@ async def retrieve(
 @vegetable_manager_router.put(
     '/{vegetable_manager_id}',
     summary="Update vegetable_manager by vegetable_manager_id",
+    response_model=VegetableManagerOut
 )
 async def update(
     vegetable_manager_id: UUID,
     data: VegetableManagerUpdate,
     current_user: User = Depends(get_current_user)
-) -> VegetableManagerOut:
+):
     """
     Endpoint to update a vegetable_manager by its ID.
 
@@ -123,7 +124,8 @@ async def update(
 
 @vegetable_manager_router.delete(
     '/{vegetable_manager_id}',
-    summary="Delete vegetable_manager by vegetable_manager_id"
+    summary="Delete vegetable_manager by vegetable_manager_id",
+    response_model=None
 )
 async def delete(
     vegetable_manager_id: UUID,

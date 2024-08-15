@@ -7,7 +7,6 @@ from itsdangerous import (
     SignatureExpired
 )
 
-from app.schemas.user_schema import EmailSchema
 from app.core.config import settings
 
 
@@ -26,7 +25,7 @@ class EmailTokenHandler:
             salt='Email_Verification'
         )
 
-    def create_token(self, email: EmailSchema) -> str:
+    def create_token(self, email: str) -> str:
         """
         create a new token based on a email for password reset and email
             verificaion
@@ -34,7 +33,7 @@ class EmailTokenHandler:
         _token = self.token_algo.dumps(email)
         return _token
 
-    def verify_token(self, token: str) -> dict:
+    def verify_token(self, token: str) -> dict | None:
         """
         extract an email address from a token and verify its identity
         """

@@ -13,8 +13,14 @@ export { default as sendIcon } from "../assets/common/send.png";
 export { default as unknowIcon } from "../assets/common/unknown.png";
 
 // weather
-export { default as windIcon } from "./icons/weather/wind.png";
-export { default as sunRainIcon } from "./icons/weather/sun-rain.png";
-export { default as sunCloudIcon } from "./icons/weather/sun-cloud.png";
-export { default as sunIcon } from "./icons/weather/sun.png";
-export { default as dropIcon } from "./icons/weather/drop.png";
+export { default as windIcon } from "./icons/forecast/wind.png";
+export { default as sunRainIcon } from "./icons/forecast/sun-rain.png";
+export { default as cloudIcon } from "./icons/forecast/cloud.png";
+export { default as snowIcon } from "./icons/forecast/snow.png";
+export { default as thunderIcon } from "./icons/forecast/thunder.png";
+export { default as sunCloudIcon } from "./icons/forecast/sun-cloud.png";
+export { default as sunIcon } from "./icons/forecast/sun.png";
+export { default as dropIcon } from "./icons/forecast/drop.png";
+export { default as rainIcon } from "./icons/forecast/rain.png";
+export { default as mistIcon } from "./icons/forecast/mist.png";
+export { default as brokenCloudIcon } from "./icons/forecast/brokenCloud.png";

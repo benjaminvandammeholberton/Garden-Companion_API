@@ -26,5 +26,5 @@ class TokenPayload(BaseModel):
     - sub (UUID): The subject of the token (user ID).
     - exp (int): The expiration time of the token.
     """
-    sub: UUID = None
-    exp: int = None
+    sub: UUID | None = None
+    exp: int | None = None

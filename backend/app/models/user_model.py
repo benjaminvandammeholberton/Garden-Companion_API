@@ -2,11 +2,12 @@
 User model representing a document in a database.
 """
 
-from beanie import Document, Indexed, Insert, Replace, before_event
+from beanie import Document, Indexed, Save, before_event
 from datetime import datetime
-from pydantic import Field, EmailStr
-from typing import Optional
+from pydantic import EmailStr, Field
 from uuid import UUID, uuid4
+
+from app.schemas.user_schema import LocalisationSchema
 
 
 class User(Document):
@@ -17,6 +18,7 @@ class User(Document):
     - user_id (UUID): The UUID of the user (default is generated with uuid4).
     - username (str): The username of the user (indexed and unique).
     - email (EmailStr): The email of the user (indexed and unique).
+    - localisation (LocalisationSchema): The localisation of the user.
     - hashed_password (str): The hashed password of the user.
     - first_name (Optional[str]): The first name of the user (default is None).
     - last_name (Optional[str]): The last name of the user (default is None).
@@ -43,19 +45,19 @@ class User(Document):
     user_id: UUID = Field(default_factory=uuid4)
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
-    username: Indexed(str, unique=True)
-    email: Indexed(EmailStr, unique=True)
+    username: Indexed(str, unique=True)  # type: ignore
+    email: Indexed(EmailStr, unique=True)  # type: ignore
+    localisation: LocalisationSchema
     hashed_password: str
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    disabled: Optional[bool] = None
+    first_name: str | None = None
+    last_name: str | None = None
+    disabled: bool = False
     chat_bot_day_requests: int = 0
     chat_bot_total_requests: int = 0
-    last_request_datetime: Optional[datetime] = None
-    is_verified: bool = Field(default=False)
-    forget_password: Optional[str] = None
-    expiration_forget_password: Optional[datetime] = None
-    postal_code: Optional[str] = None
+    last_request_datetime: datetime | None = None
+    is_verified: bool = False
+    forget_password: str | None = None
+    expiration_forget_password: datetime | None = None
 
     def __repr__(self) -> str:
         """
@@ -83,29 +85,12 @@ class User(Document):
             return self.email == other.email
         return False
 
-    @property
-    def create(self) -> datetime:
-        """
-        Get the creation timestamp of the user.
-        """
-        return self.id.generation_time
-
-    @classmethod
-    async def by_email(self, email: str) -> "User":
-        """
-        Find a user by email.
-
-        :param email: The email of the user.
-        :return: User with the specified email.
-        """
-        return await self.find_one(self.email == email)
-
-    @before_event([Replace, Insert])
+    @before_event([Save])
     def update_updated_at(self):
         """
         Update the `updated_at` timestamp before Replace or Insert events.
         """
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
 
     class Settings:
         """

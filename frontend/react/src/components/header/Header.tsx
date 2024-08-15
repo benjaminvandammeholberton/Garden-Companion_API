@@ -9,11 +9,17 @@ import notificationsIcon from "../../assets/header/notification.png";
 import userIcon from "../../assets/header/user.png";
 import basketIcon from "../../assets/header/shopping-basket.png";
 import { useNavigate } from "react-router-dom";
+import NavbarMobile from "../navbar/NavbarMobile";
 
 const Header = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string | null>(null);
+  const [isModalNavBarOpen, setIsModalNavBarOpen] = useState<boolean>(false);
+
+  const closeModalNavBar = () => {
+    setIsModalNavBarOpen(false);
+  };
 
   const toggleModal = (content: string | null) => {
     if (content === modalContent) {
@@ -61,7 +67,12 @@ const Header = () => {
           <li className="cursor-pointer">Forum</li>
         </ul>
         <div className="flex items-center w-full justify-center gap-10 border-y py-1">
-          <img className="w-8 h-10" src={burgerMenuIcon} alt="" />
+          <img
+            className="w-8 h-10 cursor-pointer"
+            src={burgerMenuIcon}
+            alt=""
+            onClick={() => setIsModalNavBarOpen(true)}
+          />
           <img
             className="w-8 h-8 cursor-pointer "
             src={notificationsIcon}
@@ -133,6 +144,7 @@ const Header = () => {
         content={modalContent}
         onClose={closeModal}
       />
+      <NavbarMobile onClose={closeModalNavBar} isOpen={isModalNavBarOpen} />
     </div>
   );
 };

@@ -3,66 +3,62 @@ Area-related Pydantic models for input, update, and output.
 """
 
 from datetime import datetime
-from typing import Optional
+from enum import Enum
 from uuid import UUID
 from pydantic import BaseModel, Field
+
+from app.schemas.vegetable_manager_schema import VegetableManagerOut
+
+
+class EnvironnementType(str, Enum):
+    outdoor = "outdoor"
+    indoor = "indoor"
+    greenhouse = "greenhouse"
 
 
 class AreaCreate(BaseModel):
     """
     Pydantic model for creating Area.
-
-    Attributes:
-    - name (str): The name of the area.
-    - surface (int): The surface of the area.
     """
-    name: str = Field(..., title='Name', max_length=25, min_length=1)
-    surface: float = Field(..., title='Surface')
-    sowing_area: bool = Field(..., title='Sowing Area')
-    environnement: str = Field(
-        ...,
-        title='Environnement',
-        max_length=25,
-        min_length=1
-    )
+    name: str = Field(max_length=25, min_length=1)
+    surface: float = Field(ge=0, le=10000)
+    sowing_area: bool
+    environnement: EnvironnementType
 
 
 class AreaUpdate(BaseModel):
     """
     Pydantic model for updating Area.
-
-    Attributes:
-    - name (Optional[str]): The updated name of the area.
-    - surface (int): The surface of the area.
     """
-    name: Optional[str] = Field(
-        None,
-        title='Name',
+    name: str | None = Field(
+        default=None,
         max_length=25,
         min_length=1
     )
-    surface: Optional[float] = Field(None, title='Surface')
-    sowing_area: Optional[bool] = Field(None, title='Sowing Area')
-    environnement: Optional[str] = Field(
-        None,
-        title='Environnement',
-        max_length=25,
-        min_length=1
-    )
+    surface: float | None = Field(default=None, ge=0, le=10000)
+    sowing_area: bool | None = None
+    environnement: EnvironnementType | None = None
+    vegetables: list[UUID] | None = None
 
 
-class AreaOut(BaseModel):
+class AreaOut(AreaCreate):
     """
     Pydantic model for representing Area output.
-
-    Attributes:
-    - area_id (UUID): The UUID of the area.
-    - surface (int): The surface of the area.
     """
     area_id: UUID
-    name: str
-    surface: float
-    sowing_area: bool
     created_at: datetime
     updated_at: datetime
-    environnement: Optional[str]
+
+
+class AreaOutWithoutVegetablesData(AreaOut):
+    """
+    Pydantic model for representing Area output without vegetables details.
+    """
+    vegetables: list[UUID]
+
+
+class AreaOutWithVegetablesData(AreaOut):
+    """
+    Pydantic model for representing Area output with vegetables details.
+    """
+    vegetables: list[VegetableManagerOut]

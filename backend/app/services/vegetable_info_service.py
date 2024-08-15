@@ -40,7 +40,7 @@ class VegetableInfoService:
         :param data: VegetableInfo creation data.
         :return: Created vegetable.
         """
-        vegetable = VegetableInfo(**data.dict(), owner=user)
+        vegetable = VegetableInfo(**data.model_dump(), owner=user)
         return await vegetable.insert()
 
     @staticmethod
@@ -76,8 +76,7 @@ class VegetableInfoService:
             current_user,
             vegetable_id
         )
-        await vegetable.update({"$set": data.dict(exclude_unset=True)})
-        vegetable.update_updated_at()
+        await vegetable.update({"$set": data.model_dump(exclude_unset=True)})
         await vegetable.save()
         return vegetable
 

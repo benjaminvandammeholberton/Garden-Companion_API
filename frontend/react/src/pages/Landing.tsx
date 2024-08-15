@@ -22,7 +22,6 @@ import useAuth from "../hooks/useAuth";
 
 const Landing = () => {
   const [user, isLoading] = useAuth();
-  console.log(user);
   if (isLoading) return <div>Chargement</div>;
 
   return (

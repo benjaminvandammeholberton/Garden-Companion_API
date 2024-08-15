@@ -1,5 +1,5 @@
 export interface VegetableInterface {
-  id: string;
+  vegetable_manager_id: string;
   name: string;
   removeDate: string | null;
 }

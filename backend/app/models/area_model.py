@@ -2,28 +2,26 @@
 Area model representing a document in a database.
 """
 
-
-from beanie import Document, before_event, Replace, Insert
+from beanie import Document, Save, before_event
 from datetime import datetime
 from pydantic import Field
-from typing import List, Optional
 from uuid import UUID, uuid4
 
-from app.models.vegetable_manager_model import VegetableManager
+from app.schemas.area_schema import EnvironnementType
 
 
 class Area(Document):
     """
     """
-    area_id: UUID = Field(default_factory=uuid4, unique=True)
-    name: str
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    area_id: UUID = Field(default_factory=uuid4)
+    name: str = Field(max_length=25, min_length=1)
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
     surface: float
     sowing_area: bool
     owner: UUID
-    environnement: Optional[str] = None
-    vegetables: List[VegetableManager] = []
+    environnement: EnvironnementType
+    vegetables: list[UUID] = []
 
     def __repr__(self) -> str:
         """
@@ -51,12 +49,12 @@ class Area(Document):
             return self.area_id == other.area_id
         return False
 
-    @before_event([Replace, Insert])
+    @before_event([Save])
     def update_updated_at(self):
         """
         Update the `updated_at` timestamp before Replace or Insert events.
         """
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
 
     class Settings:
         """

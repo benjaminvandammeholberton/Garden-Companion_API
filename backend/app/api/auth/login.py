@@ -6,7 +6,6 @@ from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
 from pydantic import ValidationError
-from typing import Any
 
 from app.core.dependencies import get_current_user
 from app.core.config import settings
@@ -24,7 +23,7 @@ auth_router = APIRouter()
     summary="Create access and refresh token for user",
     response_model=TokenSchema
 )
-async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
+async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> dict:
     """
     Endpoint to authenticate a user and generate access and refresh tokens.
 
@@ -96,7 +95,8 @@ async def refresh_token(refresh_token: str = Body(...)):
             detail="Invalid token",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    user = await UserService.get_user_by_id(token_data.sub)
+    if token_data.sub:
+        user = await UserService.get_user_by_id(token_data.sub)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

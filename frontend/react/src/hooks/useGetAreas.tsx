@@ -7,13 +7,13 @@ type useGetAreasReturnType = [AreaInterface[], boolean, string | null];
 
 const useGetAreas = (): useGetAreasReturnType => {
   const [user] = useAuth();
-  const [isLoading, SetIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, SetError] = useState<string | null>(null);
   const [areas, setAreas] = useState<AreaInterface[]>([]);
 
   useEffect(() => {
     const fetchAreas = async () => {
-      SetIsLoading(true);
+      setIsLoading(true);
       try {
         const areas: AreaInterface[] = await getAllAreas();
         const sortedAreas = areas.sort((a, b) => a.name.localeCompare(b.name));
@@ -22,7 +22,7 @@ const useGetAreas = (): useGetAreasReturnType => {
         SetError(error as string);
         console.error(error);
       } finally {
-        SetIsLoading(false);
+        setIsLoading(false);
       }
     };
     if (user) fetchAreas();

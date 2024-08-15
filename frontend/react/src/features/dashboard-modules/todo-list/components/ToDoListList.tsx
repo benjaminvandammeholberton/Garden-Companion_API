@@ -1,5 +1,13 @@
+// interfaces
 import { ToDoInterface } from "../interfaces";
+
+// assets
 import priorityIcon from "../assets/priority.png";
+import deleteIcon from "../assets/delete.png";
+import checkboxChecked from "../../../../assets/common/checkbox-checked.png";
+import checkboxUnhecked from "../../../../assets/common/checkbox-checked.png";
+
+// utils
 import {
   sortByNameAscending,
   sortByNameDescending,
@@ -10,7 +18,8 @@ import {
   sortByPriorityAscending,
   sortByPriorityDescending,
 } from "../utils/sortFunctions";
-import deleteIcon from "../assets/delete.png";
+
+// api
 import { deleteToDoApi, updateToDoApi } from "../utils/todosApi";
 
 interface ToDoListListProps {
@@ -120,17 +129,17 @@ const ToDoListList: React.FC<ToDoListListProps> = ({
                   />
                 </div>
                 {todo.priority && (
-                  <img className="w-4 h-4" src={priorityIcon} alt="" />
+                  <img className="w-5 h-5" src={priorityIcon} alt="" />
                 )}
                 <p
                   onClick={() => handleClickEdit(todo.todo_id)}
-                  className="text-base leading-none cursor-pointer"
+                  className="text-xl leading-none cursor-pointer"
                 >
                   {todo.title}
                 </p>
               </div>
               <img
-                className="w-4 h-4 cursor-pointer"
+                className="w-5 h-5 cursor-pointer"
                 src={deleteIcon}
                 alt=""
                 onClick={deleteTodo}

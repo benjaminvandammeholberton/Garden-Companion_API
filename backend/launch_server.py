@@ -6,7 +6,7 @@ import os
 
 # Spécifiez l'adresse IP et le port sur lesquels le serveur doit écouter
 adresse_ip = "0.0.0.0"  # écoute sur toutes les interfaces réseau
-port = 8000
+port = 8001
 
 # Utilisez os.system pour lancer UVicorn avec les options d'adresse IP et
 # de port

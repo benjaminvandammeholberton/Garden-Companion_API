@@ -3,9 +3,8 @@ Vegetable-info-related Pydantic models for input, update, and output.
 """
 
 from datetime import date, datetime
-from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, Field, conint, confloat
+from pydantic import BaseModel, Field
 
 
 class VegetableInfoCreate(BaseModel):
@@ -25,39 +24,16 @@ class VegetableInfoCreate(BaseModel):
     - germination (int): Soil temperature for germination in Celsius.
     - description (str): Description of the vegetable.
     """
-    name: str = Field(..., title='Name', max_length=25, min_length=1)
-    category: str = Field(..., title='Family', max_length=55, min_length=1)
-    start_indoor: Optional[date] = Field(
-        None,
-        title='Date to start indoor sowing'
-    )
-    start_outdoor: Optional[date] = Field(
-        None,
-        title='Date to start outdoor sowing'
-    )
-    end: date = Field(..., title='Last date for sowing')
-    water_needs: conint(ge=1, le=3) = Field(
-        ...,
-        title='Water Needs (scale: 0 to 5)'
-    )
-    cold_resistance: conint(ge=0, le=2) = Field(
-        ...,
-        title='Cold Resistance (scale: 0 to 3)'
-    )
-    spacing_on_row: confloat(ge=0.0, le=10000.0) = Field(
-        ...,
-        title='Spacing on row (in centimeters)'
-    )
-    germination: conint(ge=-150, le=+150) = Field(
-        ...,
-        title='Soil temperature for germination (in Celsius)'
-    )
-    description: str = Field(
-        ...,
-        title='Description',
-        max_length=755,
-        min_length=1
-    )
+    name: str = Field(max_length=25, min_length=1)
+    category: str = Field(max_length=55, min_length=1)
+    start_indoor: date | None = None
+    start_outdoor: date | None = None
+    end: date
+    water_needs: int = Field(ge=1, le=3)
+    cold_resistance: int = Field(ge=0, le=2)
+    spacing_on_row: float = Field(ge=0.0, le=10000.0)
+    germination: int = Field(ge=-150, le=150)
+    description: str = Field(max_length=755, min_length=1)
 
 
 class VegetableInfoUpdate(BaseModel):
@@ -80,47 +56,16 @@ class VegetableInfoUpdate(BaseModel):
         Celsius.
     - description (Optional[str]): Updated description of the vegetable.
     """
-    name: Optional[str] = Field(
-        None, title='Name', max_length=25, min_length=1)
-    category: Optional[str] = Field(
-        None,
-        title='Family',
-        max_length=55,
-        min_length=1
-    )
-    start_indoor: Optional[conint(ge=1, le=52)] = Field(
-        None,
-        title='Week number to start indoor sowing'
-    )
-    start_outdoor: Optional[conint(ge=1, le=52)] = Field(
-        None,
-        title='Week number to start outdoor sowing'
-    )
-    end: Optional[conint(ge=1, le=52)] = Field(
-        None,
-        title='Last week number for sowing'
-    )
-    water_needs: Optional[conint(ge=0, le=5)] = Field(
-        None,
-        title='Water Needs (scale: 0 to 5)'
-    )
-    cold_resistance: Optional[conint(ge=0, le=5)] = Field(
-        None,
-        title='Cold Resistance (scale: 0 to 3)'
-    )
-    spacing_on_row: Optional[confloat(ge=0.0, le=10000.0)] = Field(
-        None,
-        title='Spacing on row (in centimeters)'
-    )
-    germination: Optional[conint(ge=-150, le=+150)] = Field(
-        None,
-        title='Soil temperature for germination (in Celsius)'
-    )
-    description: Optional[str] = Field(
-        None, title='Description',
-        max_length=755,
-        min_length=1
-    )
+    name: str | None = Field(None, max_length=25, min_length=1)
+    category: str | None = Field(None, max_length=55, min_length=1)
+    start_indoor: int | None = Field(None, ge=1, le=52)
+    start_outdoor: int | None = Field(None, ge=1, le=52)
+    end: int | None = Field(None, ge=1, le=52)
+    water_needs: int | None = Field(None, ge=0, le=5)
+    cold_resistance: int | None = Field(None, ge=0, le=5)
+    spacing_on_row: float | None = Field(None, ge=0.0, le=10000.0)
+    germination: int | None = Field(None, ge=-150, le=150)
+    description: str | None = Field(max_length=755, min_length=1)
 
 
 class VegetableInfoOut(BaseModel):
@@ -146,8 +91,8 @@ class VegetableInfoOut(BaseModel):
     vegetable_info_id: UUID
     name: str
     category: str
-    start_indoor: Optional[datetime]
-    start_outdoor: Optional[datetime]
+    start_indoor: datetime | None
+    start_outdoor: datetime | None
     end: datetime
     water_needs: int
     cold_resistance: int

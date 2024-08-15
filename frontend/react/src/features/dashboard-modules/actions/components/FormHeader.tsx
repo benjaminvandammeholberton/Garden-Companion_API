@@ -1,9 +1,9 @@
-interface ActionFormHeaderProps {
+interface FormHeaderProps {
   icon: string;
   name: string;
 }
 
-const ActionFormHeader: React.FC<ActionFormHeaderProps> = ({ icon, name }) => {
+const FormHeader: React.FC<FormHeaderProps> = ({ icon, name }) => {
   return (
     <div className="flex justify-center items-center gap-3">
       <img src={icon} alt="" className="w-12" />
@@ -12,4 +12,4 @@ const ActionFormHeader: React.FC<ActionFormHeaderProps> = ({ icon, name }) => {
   );
 };
 
-export default ActionFormHeader;
+export default FormHeader;

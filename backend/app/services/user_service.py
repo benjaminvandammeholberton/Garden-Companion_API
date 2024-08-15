@@ -2,7 +2,6 @@
 UserService module for handling user-related operations.
 """
 
-from typing import Optional
 from uuid import UUID
 
 from app.api.auth.email_verification import send_verification_email
@@ -29,16 +28,20 @@ class UserService:
         user_in = User(
             username=user.username,
             email=user.email,
-            hashed_password=get_password(user.password)
+            hashed_password=get_password(user.password),
+            localisation=user.localisation
         )
-        await user_in.save()
+        await user_in.create()
+
         # add vegetable_info to the user
         await VegetableInfoService.add_all_vegetable_info_to_user(user_in)
+
         await send_verification_email(user.email, user)
+
         return user_in
 
     @staticmethod
-    async def authenticate(email: str, password: str) -> Optional[User]:
+    async def authenticate(email: str, password: str) -> User | None:
         """
         Authenticate a user based on email and password.
 
@@ -55,7 +58,7 @@ class UserService:
         return user
 
     @staticmethod
-    async def get_user_by_email(email: str) -> Optional[User]:
+    async def get_user_by_email(email: str) -> User | None:
         """
         Get a user by email.
 
@@ -66,7 +69,7 @@ class UserService:
         return user
 
     @staticmethod
-    async def get_user_by_id(id: UUID) -> Optional[User]:
+    async def get_user_by_id(id: UUID) -> User | None:
         """
         Get a user by ID.
 
@@ -77,18 +80,16 @@ class UserService:
         return user
 
     @staticmethod
-    async def get_user_by_username(username: str) -> Optional[User]:
+    async def get_user_by_username(username: str) -> User | None:
         """ """
         user = await User.find_one(User.username == username)
         return user
 
     @staticmethod
-    async def update_user_password(data: dict, current_user: User):
+    async def update_user_password(data: dict, current_user: User) -> dict:
         """ """
         hashed_password = get_password(data['new_password'])
-        print(hashed_password)
         current_user.hashed_password = hashed_password
-        current_user.update_updated_at()
         await current_user.save()
         new_access_token = create_access_token(current_user.user_id)
         return {"new_access_token": new_access_token}

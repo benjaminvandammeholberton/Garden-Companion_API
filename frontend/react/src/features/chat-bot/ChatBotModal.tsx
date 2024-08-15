@@ -161,7 +161,7 @@ const ChatBotModal: React.FC<ChatBotModalProps> = ({ isOpen, onClose }) => {
     items-center 
     bg-white 
     md:rounded-t-3xl 
-    border
+    md:border 
     overflow-hidden
     "
     >

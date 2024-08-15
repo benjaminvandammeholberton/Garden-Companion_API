@@ -31,8 +31,8 @@ class TodoService:
         :param data: Todo creation data.
         :return: Created todo.
         """
-        todo = Todo(**data.dict(), owner=user.user_id)
-        return await todo.insert()
+        todo = Todo(**data.model_dump(), owner=user.user_id)
+        return await todo.create()
 
     @staticmethod
     async def retrieve_todo(current_user: User, todo_id: UUID):
@@ -58,8 +58,7 @@ class TodoService:
         :return: Updated todo.
         """
         todo = await TodoService.retrieve_todo(current_user, todo_id)
-        await todo.update({"$set": data.dict(exclude_unset=True)})
-        todo.update_update_at()
+        await todo.update({"$set": data.model_dump(exclude_unset=True)})
         await todo.save()
         return todo
 

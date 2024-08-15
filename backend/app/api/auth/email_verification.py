@@ -10,7 +10,7 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from app.core.config import settings
 from app.core.email_token_handler import EmailTokenHandler
 from app.models.user_model import User
-from app.schemas.user_schema import EmailSchema
+from app.schemas.user_schema import UserAuth
 
 email_verification_router = APIRouter()
 
@@ -31,8 +31,8 @@ conf = ConnectionConfig(
 
 
 async def send_verification_email(
-    email: EmailSchema,
-    user: User
+    email: str,
+    user: UserAuth
 ) -> JSONResponse:
     """
     Sends a verification email to the provided email address.
@@ -86,20 +86,20 @@ async def confirm_email(token: str):
             on the verification status.
     """
     verification = handler.verify_token(token)
+    if not verification:
+        raise HTTPException(
+            status_code=400,
+            detail="Your account has not been verified"
+        )
     await update_verified_user(verification['email'])
     if verification['check']:
         return RedirectResponse(
             url=f'{ settings.FRONT_END_URL }/login.html',
             status_code=302
         )
-    if verification is None:
-        raise HTTPException(
-            status_code=400,
-            detail="Your account has not been verified"
-        )
 
 
-async def update_verified_user(email: EmailSchema):
+async def update_verified_user(email: str):
     """
     Updates the user's verification status in the database.
 
@@ -108,5 +108,6 @@ async def update_verified_user(email: EmailSchema):
                                                     status is to be updated.
     """
     user = await User.find_one(User.email == email)
-    user.is_verified = True
-    await user.save()
+    if user:
+        user.is_verified = True
+        await user.save()

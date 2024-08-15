@@ -2,11 +2,11 @@
 Vegetable Info model representing a document in a database.
 """
 
-from beanie import Document, Indexed, Link, before_event, Replace, Insert
+from beanie import Document, Link, before_event, Save
 from datetime import datetime
-from pydantic import Field
-from typing import Optional
 from uuid import UUID, uuid4
+
+from pydantic import Field
 
 from app.models.user_model import User
 
@@ -15,13 +15,13 @@ class VegetableInfo(Document):
     """
 
     """
-    vegetable_info_id: UUID = Field(default_factory=uuid4, unique=True)
-    name: Indexed(str)
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
-    category: Indexed(str)
-    start_indoor: Optional[datetime]
-    start_outdoor: Optional[datetime]
+    vegetable_info_id: UUID = Field(default_factory=uuid4)
+    name: str
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
+    category: str
+    start_indoor: datetime | None = None
+    start_outdoor: datetime | None = None
     end: datetime
     water_needs: int
     cold_resistance: int
@@ -57,7 +57,7 @@ class VegetableInfo(Document):
             return self.vegetable_info_id == other.vegetable_info_id
         return False
 
-    @before_event([Replace, Insert])
+    @before_event([Save])
     def update_updated_at(self):
         """
         Update the `updated_at` timestamp before Replace or Insert events.

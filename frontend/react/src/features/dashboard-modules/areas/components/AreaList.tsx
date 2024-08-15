@@ -1,12 +1,16 @@
 // assets
 import { greenhouse, outdoor, indoor } from "../../../../assets/assets-path";
-import vegetableIconRegistry from "../../../../utils/vegetablesIconsRegistry";
+import arrow from "../../../../assets/common/up-right-arrow.png";
 
 // hooks
 import useGetAreas from "../../../../hooks/useGetAreas";
 
 // interfaces
-import { VegetableInterface } from "../../../../interfaces/interfaces";
+import {
+  AreaInterface,
+  VegetableInterface,
+} from "../../../../interfaces/interfaces";
+import AreaListItem from "./AreaListItem";
 
 interface AreaListProps {
   sortedBy: string;
@@ -15,65 +19,67 @@ interface AreaListProps {
 
 const AreaList: React.FC<AreaListProps> = ({ sortedBy, openModal }) => {
   const environnements = ["greenhouse", "outdoor", "indoor"];
-  const [areas, isLoading] = useGetAreas();
+  const [areas, isLoadingAreas] = useGetAreas();
+
+  //function to make a list of unique vegetable growing in one area
+  const getListUniqueVegetables = (area: AreaInterface) => {
+    return area.vegetables?.reduce(
+      (acc: VegetableInterface[], vegetable: VegetableInterface) => {
+        if (acc.some((v) => v.name === vegetable.name)) {
+          return acc;
+        }
+        acc.push(vegetable);
+        return acc;
+      },
+      []
+    );
+  };
+
+  // function to get the right area icon based of the environnement
+  const getAreaIcon = (env: string) => {
+    let areaIcon: string | undefined;
+    if (env === "indoor") areaIcon = indoor;
+    if (env === "greenhouse") areaIcon = greenhouse;
+    if (env === "outdoor") areaIcon = outdoor;
+    return areaIcon;
+  };
 
   return (
-    <div className="overflow-scroll h-[285px] my-2 pr-2 mx-2 font-thin text-xl">
-      {isLoading && <p>Chargement</p>}
+    <div className="overflow-y-scroll overflow-x-hidden  h-[285px] my-2 pr-2 mx-2 font-thin text-xl">
+      {areas.length === 0 && (
+        <div className="relative w-full top-0 flex flex-col items-end p-30 gap-10">
+          <img
+            src={arrow}
+            alt="arrow to add"
+            className="absolute top-0 right-10"
+          />
+          <p className="w-60 absolute top-20 font-normal right-10 text-center">
+            Pour commencer, ajoutez une zone de culture
+          </p>
+        </div>
+      )}
+      {isLoadingAreas && <p>Chargement</p>}
+
       {sortedBy === "environnement" ? (
         <ul className=" flex flex-col gap-2">
           {environnements.map((env, index) => {
-            let areaIcon: string | undefined;
-            if (env === "indoor") areaIcon = indoor;
-            if (env === "greenhouse") areaIcon = greenhouse;
-            if (env === "outdoor") areaIcon = outdoor;
             const areasOfType = areas.filter(
               (area) => area.environnement === env
             );
-            // Sort areas of current type by name
             const sortedAreasOfType = areasOfType.sort((a, b) =>
               a.name.localeCompare(b.name)
             );
             return (
               <div key={index}>
                 {sortedAreasOfType.map((area) => {
-                  const vegetableUnique = area.vegetables?.reduce(
-                    (
-                      acc: VegetableInterface[],
-                      vegetable: VegetableInterface
-                    ) => {
-                      if (acc.some((v) => v.name === vegetable.name)) {
-                        return acc;
-                      }
-                      acc.push(vegetable);
-                      return acc;
-                    },
-                    []
-                  );
                   return (
-                    <li
+                    <AreaListItem
                       key={area.area_id}
-                      onClick={openModal}
-                      className="flex gap-3 w-full justify-between"
-                    >
-                      <div className="cursor-pointer flex items-center gap-3">
-                        <img className="w-5 h-5" src={areaIcon} alt="" />
-                        <span>{area.name}</span>
-                      </div>
-                      <div className="flex items-center">
-                        {vegetableUnique?.map((vegetable) => {
-                          if (!vegetable.removeDate)
-                            return (
-                              <img
-                                key={vegetable.id}
-                                className="w-5 h-5"
-                                src={vegetableIconRegistry[vegetable.name]}
-                                alt=""
-                              />
-                            );
-                        })}
-                      </div>
-                    </li>
+                      area={area}
+                      openModal={openModal}
+                      areaIcon={getAreaIcon(area.environnement)}
+                      vegetableUnique={getListUniqueVegetables(area)}
+                    />
                   );
                 })}
               </div>
@@ -83,44 +89,14 @@ const AreaList: React.FC<AreaListProps> = ({ sortedBy, openModal }) => {
       ) : (
         <ul className="flex flex-col">
           {areas.map((area) => {
-            let areaIcon: string | undefined;
-            if (area.environnement === "indoor") areaIcon = indoor;
-            if (area.environnement === "greenhouse") areaIcon = greenhouse;
-            if (area.environnement === "outdoor") areaIcon = outdoor;
-            const vegetableUnique = area.vegetables?.reduce(
-              (acc: VegetableInterface[], vegetable: VegetableInterface) => {
-                if (acc.some((v) => v.name === vegetable.name)) {
-                  return acc;
-                }
-                acc.push(vegetable);
-                return acc;
-              },
-              []
-            );
             return (
-              <li
+              <AreaListItem
                 key={area.area_id}
-                onClick={openModal}
-                className="flex gap-3 w-full justify-between"
-              >
-                <div className="cursor-pointer flex gap-3">
-                  <img className="w-5 h-5" src={areaIcon} alt="" />
-                  <span>{area.name}</span>
-                </div>
-                <div className="flex items-center">
-                  {vegetableUnique?.map((vegetable) => {
-                    if (!vegetable.removeDate)
-                      return (
-                        <img
-                          key={vegetable.id}
-                          className="w-5 h-5"
-                          src={vegetableIconRegistry[vegetable.name]}
-                          alt=""
-                        />
-                      );
-                  })}
-                </div>
-              </li>
+                area={area}
+                openModal={openModal}
+                areaIcon={getAreaIcon(area.environnement)}
+                vegetableUnique={getListUniqueVegetables(area)}
+              />
             );
           })}
         </ul>

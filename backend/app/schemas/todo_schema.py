@@ -4,7 +4,6 @@ Todo-related Pydantic models for input, update, and output.
 
 from datetime import datetime
 from pydantic import BaseModel, Field
-from typing import Optional
 from uuid import UUID
 
 
@@ -12,8 +11,8 @@ class TodoCreate(BaseModel):
     """
     TodoCreate class for creating a new todo.
     """
-    title: str = Field(..., title='Title', max_length=55, min_length=1)
-    status: Optional[bool] = False
+    title: str = Field(max_length=55, min_length=1)
+    status: bool | None = False
     priority: bool
 
 
@@ -21,14 +20,9 @@ class TodoUpdate(BaseModel):
     """
     TodoUpdate class for updating an existing todo.
     """
-    title: Optional[str] = Field(
-        None,
-        title='Title',
-        max_length=55,
-        min_length=1
-    )
-    status: Optional[bool] = None
-    priority: Optional[bool] = None
+    title: str | None = Field(None, max_length=55, min_length=1)
+    status: bool | None = None
+    priority: bool | None = None
 
 
 class TodoOut(BaseModel):

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DataRecord = Record<string, any>;
@@ -15,20 +15,7 @@ const useCompletion = (
   (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
   (e: React.ChangeEvent<HTMLInputElement>) => void
 ] => {
-  // Function to safely access nested keys
-  const getValue = (
-    obj: DataRecord,
-    path: string | string[]
-  ): string | DataRecord => {
-    if (Array.isArray(path)) {
-      let value = obj;
-      for (const key of path) {
-        value = value[key] || "";
-      }
-      return value;
-    }
-    return obj[path] || "";
-  };
+  // sort the received data by name
   const dataSorted = data.sort((a, b) =>
     getValue(a, completeBy).localeCompare(getValue(b, completeBy))
   );
@@ -37,6 +24,10 @@ const useCompletion = (
   const [input, setInput] = useState<string>("");
   const [choicesFiltered, setChoicesFiltered] =
     useState<DataRecord[]>(dataSorted);
+
+  useEffect(() => {
+    setChoicesFiltered(dataSorted);
+  }, [dataSorted]);
 
   const handleClickOnChoice = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
@@ -57,7 +48,6 @@ const useCompletion = (
     );
     setChoicesFiltered(dataFiltered);
   };
-
   return [
     isFocus,
     setIsFocus,
@@ -66,6 +56,21 @@ const useCompletion = (
     handleClickOnChoice,
     handleInputChange,
   ];
+};
+
+// Function to access nested keys
+const getValue = (
+  obj: DataRecord,
+  path: string | string[]
+): string | DataRecord => {
+  if (Array.isArray(path)) {
+    let value = obj;
+    for (const key of path) {
+      value = value[key] || "";
+    }
+    return value;
+  }
+  return obj[path] || "";
 };
 
 export default useCompletion;
