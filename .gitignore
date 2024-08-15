@@ -33,3 +33,4 @@ package-lock.json
 Dockerfile
 yarn.lock
 .vite
+.mypy_cache
