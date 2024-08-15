@@ -32,3 +32,4 @@ dist-ssr
 package-lock.json
 Dockerfile
 yarn.lock
+.vite
